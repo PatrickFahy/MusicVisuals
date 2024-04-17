@@ -37,7 +37,7 @@ public class Assignment_Test extends PApplet {
 
     public void setup() {
         minim = new Minim(this);
-        ap = minim.loadFile("heroplanet.mp3", screen_size);
+        ap = minim.loadFile("java\\data\\The Chemical Brothers - We've Got To Try.mp3", screen_size);
         ap.play();
         ab = ap.mix;
         colorMode(HSB);
