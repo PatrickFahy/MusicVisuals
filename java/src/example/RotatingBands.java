@@ -60,7 +60,7 @@ public class RotatingBands extends Visual {
         //getAudioPlayer().play();
         b = ap.mix;
         lightPosition = new PVector(width / 2, height / 2, 200);
-        //startListening(); 
+        //startListening();
         
     }
 
