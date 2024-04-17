@@ -7,6 +7,7 @@ import example.CubeVisual1;
 import example.MyVisual;
 */
 import example.RotatingAudioBands;
+import example.RotatingBands;
 public class Main {
 
     public void startUI() {

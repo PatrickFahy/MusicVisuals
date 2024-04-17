@@ -27,7 +27,7 @@ public class Assignment_Test extends PApplet {
     Square theVoid; // Declare the square as a global variable
 
     boolean scene1 = true; // Control variable for the initial scene
-    boolean scene2 = true; // Control variable for the initial scene
+    boolean scene2 = false; // Control variable for the initial scene
 
 
     public void settings() {
