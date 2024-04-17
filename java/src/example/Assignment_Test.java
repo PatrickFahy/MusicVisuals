@@ -37,7 +37,7 @@ public class Assignment_Test extends PApplet {
 
     public void setup() {
         minim = new Minim(this);
-        ap = minim.loadFile("C:\\Users\\ruben\\Downloads\\Cowboys from Hell (2010 Remaster).wav", screen_size);
+        ap = minim.loadFile("heroplanet.mp3", screen_size);
         ap.play();
         ab = ap.mix;
         colorMode(HSB);
