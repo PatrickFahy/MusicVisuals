@@ -50,7 +50,7 @@ public class RotatingBands extends Visual {
         colorMode(HSB);
         noCursor();
         m = new Minim(this);
-        ap = m.loadFile("heroplanet.mp3"); 
+        ap = m.loadFile("The Chemical Brothers - We've Got To Try.mp3"); //java\data\The Chemical Brothers - We've Got To Try.mp3
         ap.play();
         
         //setFrameSize(256);
