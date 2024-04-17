@@ -8,7 +8,10 @@ import example.MyVisual;
 */
 import example.RotatingAudioBands;
 import example.RotatingBands;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4d2540196aa8262f360c7a85138e43992ef81ccc
 public class Main {
 
     public void startUI() {
