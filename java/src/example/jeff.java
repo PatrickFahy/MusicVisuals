@@ -130,21 +130,25 @@ public class jeff extends Visual {
 
             //line(i, h , i , h + b.get(i) * h); //waveform
             //line(i, h , i ,b.get(i) * h + h);
+            // fill(0, 200, 200);
 
-            //ellipse(w, h/2,b.get(i) * h, b.get(i) * h); // Draw a circle 
-
+             // Draw box with size based on amplitude
+            fill(200, 200, 200);
+            box(90);
+            if (i != 3)
+            {
+            ellipse(w, h/3,b.get(i)*h, h);
+            }
             //rect(b.get(i) * h, b.get(i) * h,b.get(i) * h, b.get(i) * h); // Draw a rectangle
 
-            if(b.get(i) > (avg * 2))
+            //rotates camera when buffer is twice the average
+            if(b.get(i) > (lerpedAvg))
             {
+                rotateY(frameCount * 0.001f);
+                rotateX(frameCount * 0.001f);
                 spot += 15;
-                rotateY(frameCount * 0.01f);
-                rotateX(frameCount * 0.01f);
-                fill(200, 200, 200);
-                box(b.get(i)*100);
                 translate(spot,spot/2);
             }
-
         }
         // Drawing code goes here  
     }
