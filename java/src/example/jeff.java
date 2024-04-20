@@ -26,6 +26,12 @@ public class jeff extends Visual {
     float smoothedAmplitude = 0;
     float lerpedAvg = 0;
 
+    //camera settings Not used yet
+    float cameraX = 0;
+    float cameraY = 0;
+    float cameraZ = 0;
+
+
 
     public void settings()
     {
@@ -34,7 +40,6 @@ public class jeff extends Visual {
         //fullScreen(P3D, SPAN);
     }
     
-
     public void keyPressed()
     {
         if (key == ' ')
@@ -54,11 +59,20 @@ public class jeff extends Visual {
         ap.play();
         
         b = ap.mix;
+
+
         lightPosition = new PVector(width / 2, height / 2, 200);
         
     }
 
-    public void draw(){
+    float rot = 0;
+
+    //frequency bands
+    float[] bands;
+
+
+    public void draw()
+    {
 
         //adds colour
         colorMode(HSB);
@@ -67,6 +81,21 @@ public class jeff extends Visual {
 
         lights();
         background(0);
+
+        stroke(255);
+        lights();
+        stroke(map(getSmoothedAmplitude(), 0, 1, 0, 255), 255, 255);
+
+        rot += getAmplitude() / 8.0f; // increase rotation based on song
+        
+        rotateY(rot);
+
+        bands = getSmoothedBands(); // Frequency bands
+
+        // Move light position around the object
+        // float radius = 200;
+        // lightPosition.x = width / 2  + cos(angle) * radius;
+        // lightPosition.y = height / 2 + sin(angle) * radius;
   
         // Update angle for next frame
         angle += 0.01;
@@ -90,6 +119,7 @@ public class jeff extends Visual {
  
         float w = width / 2;
         float h = height / 2;
+        float spot = 0;
 
 
         for(int i = 0 ; i < b.size() ; i ++)
@@ -97,13 +127,25 @@ public class jeff extends Visual {
             float hue = map(i, 0, b.size() , 0, 256);
             stroke(bgcolor % 255, 255, 255);
             noFill();
-            line(i, h , i , h + b.get(i) * h); //waveform
 
-            fill(255, 0, 0); // Fill color (red in this case)
-            ellipse(w, h/2,b.get(i) * h, b.get(i) * h); // Draw a circle 
-            ellipse(w, h+w/2,b.get(i) * h, b.get(i) * h); // Draw a circle
+            //line(i, h , i , h + b.get(i) * h); //waveform
+            //line(i, h , i ,b.get(i) * h + h);
+
+            //ellipse(w, h/2,b.get(i) * h, b.get(i) * h); // Draw a circle 
+
+            //rect(b.get(i) * h, b.get(i) * h,b.get(i) * h, b.get(i) * h); // Draw a rectangle
+
+            if(b.get(i) > (avg * 2))
+            {
+                spot += 15;
+                rotateY(frameCount * 0.01f);
+                rotateX(frameCount * 0.01f);
+                fill(200, 200, 200);
+                box(b.get(i)*100);
+                translate(spot,spot/2);
+            }
+
         }
-
         // Drawing code goes here  
     }
     float lerped = 0;
