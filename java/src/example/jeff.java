@@ -17,8 +17,14 @@ public class jeff extends Visual {
     AudioBuffer b;
 
     PVector lightPosition;
-    //float angle = 0;
+    float angle = 0;
     float bgcolor = 0;
+
+    float[] lerpedBuffer;
+    float y = 0;
+    float smoothedY = 0;
+    float smoothedAmplitude = 0;
+    float lerpedAvg = 0;
 
 
     public void settings()
@@ -51,11 +57,10 @@ public class jeff extends Visual {
         lightPosition = new PVector(width / 2, height / 2, 200);
         
     }
-    float y = 400;
-    float lerpedAvg = 0;
 
-    public void draw()
-    {
+    public void draw(){
+
+        //adds colour
         colorMode(HSB);
         background(0);
         stroke(bgcolor % 255, 255, 255);
@@ -83,23 +88,23 @@ public class jeff extends Visual {
         // Set light position
         pointLight(255, 255, 255, lightPosition.x, lightPosition.y, lightPosition.z);
  
-
+        float w = width / 2;
         float h = height / 2;
 
-        //Width of each segment
-        float w = width / (float) b.size(); 
+
         for(int i = 0 ; i < b.size() ; i ++)
         {
             float hue = map(i, 0, b.size() , 0, 256);
             stroke(bgcolor % 255, 255, 255);
             noFill();
+            line(i, h , i , h + b.get(i) * h); //waveform
+
+            fill(255, 0, 0); // Fill color (red in this case)
+            ellipse(w, h/2,b.get(i) * h, b.get(i) * h); // Draw a circle 
+            ellipse(w, h+w/2,b.get(i) * h, b.get(i) * h); // Draw a circle
         }
 
-        // Drawing code goes here
-        line(200, 200, h/2, w/2);
-        circle(tot, h, w);
-        
+        // Drawing code goes here  
     }
     float lerped = 0;
-    float angle = 0;
 }
