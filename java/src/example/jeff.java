@@ -131,26 +131,30 @@ public class jeff extends Visual {
             //line(i, h , i , h + b.get(i) * h); //waveform
             //line(i, h , i ,b.get(i) * h + h);
             // fill(0, 200, 200);
-
-             // Draw box with size based on amplitude
+            // Draw box with size based on amplitude
             fill(200, 200, 200);
             box(90);
-            if (i != 3)
-            {
             ellipse(w, h/3,b.get(i)*h, h);
-            }
-            //rect(b.get(i) * h, b.get(i) * h,b.get(i) * h, b.get(i) * h); // Draw a rectangle
+            //rect(w,w,b.get(i) * h, h); // Draw a rectangle
 
             //rotates camera when buffer is twice the average
-            if(b.get(i) > (lerpedAvg))
+            if(b.get(i) > (avg))
             {
                 rotateY(frameCount * 0.001f);
                 rotateX(frameCount * 0.001f);
                 spot += 15;
-                translate(spot,spot/2);
+                translate(spot,spot);
             }
+        line(w, i , h, h + b.get(i) * h); //waveform
+
+        // Draw a small sphere at the bottom of the line
+        float sphereX = w; // X-coordinate of the sphere
+        float sphereY = h + b.get(i) * h; // Y-coordinate
+        float sphereDiameter = 15; // Diameter of the sphere
+        ellipse(sphereX, sphereY, sphereDiameter, sphereDiameter); // Draw the sphere
         }
         // Drawing code goes here  
+        
     }
     float lerped = 0;
 }
