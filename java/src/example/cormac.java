@@ -58,104 +58,50 @@ public class cormac extends Visual{
     float off = 0;
 
     public void draw()
-    {
-        background(0);
-        float rotationSpeed = map(smoothedAmplitude, 0.0f, 1.0f, 0.01f, 0.01f); // Map amplitude to rotation speed
+{
+    background(0);
+    
+    // Calculate rotation speed based on amplitude
+    float rotationSpeed = map(smoothedAmplitude, 0.0f, 1.0f, 0.01f, 0.1f); // Map amplitude to rotation speed
 
-        y = height / 2; // Reset y position to center
+    // Reset y position to center
+    y = height / 2; 
 
-        // Set the color based on amplitude
-        float hue = map(frameCount % 255, 0.0f, 255.0f, 0.0f, 360.0f);
-        float saturation = 255;
-        float brightness = 255;
-        fill(hue, saturation, brightness);
-        stroke(hue, saturation, brightness);
+    // Set the color based on amplitude
+    float hue = map(frameCount % 255, 0.0f, 255.0f, 0.0f, 360.0f);
+    float saturation = 255;
+    float brightness = 255;
+    fill(hue, saturation, brightness);
+    stroke(hue, saturation, brightness);
 
-        // Draw 3D sphere at the center of the screen
-        lights();
-        translate(width / 2, height / 2);
-        rotateY(frameCount * rotationSpeed);
-        rotateX(frameCount * rotationSpeed);    
-        sphere(100);
+    // Draw 3D sphere at the center of the screen
+    lights();
+    translate(width / 2, height / 2);
 
+    // Calculate sphere size based on amplitude
+    float sphereSize = map(smoothedAmplitude, 0.0f, 1.0f, 50, 200); // Map amplitude to sphere size
+    float scaleFactor = 1.2f; // Scale factor to extend the lines slightly beyond the sphere's surface
 
-        // Draw waveform lines based on amplitude
-        float waveRadius = 200;
-        float angleStep = TWO_PI / ab.size();
+    // Draw the sphere with dynamic size
+    sphere(sphereSize);
 
-        for (int i = 0; i < ab.size(); i++) {
-            float x = sin(angleStep * i) * waveRadius;
-            float y = map(ab.get(i), -2, 2, -100 , 100); // Map amplitude to height around the sphere
-            float z = cos(angleStep * i) * waveRadius;
-            // Translate the waveform point to start from the surface of the sphere
-            float scaleFactor = 1.2f; // Scale factor to extend the lines slightly beyond the sphere's surface
-            float newX = x * scaleFactor;
-            float newY = y * scaleFactor;
-            float newZ = z * scaleFactor;
-            // Draw the line from the sphere's center to the translated point
-            line(0, 0, 0, newX, newY, newZ);
-        }
+    // Draw waveform lines based on amplitude
+    float waveRadius = 200;
+    float angleStep = TWO_PI / ab.size();
+
+    for (int i = 0; i < ab.size(); i++) {
+        float x = sin(angleStep * i) * waveRadius;
+        float y = map(ab.get(i), -2, 2, -100 , 100); // Map amplitude to height around the sphere
+        float z = cos(angleStep * i) * waveRadius;
+
+        // Translate the waveform point to start from the surface of the sphere
+        float newX = x * scaleFactor;
+        float newY = y * scaleFactor;
+        float newZ = z * scaleFactor;
+
+        // Draw the line from the sphere's center to the translated point
+        line(0, 0, 0, newX, newY, newZ);
     }
-
-    // public void draw()
-    // {
-    //     float average = 0;
-    //     float sum = 0;
-    //     off += 1;
-    //     // Calculate sum and average of the samples
-    //     // Also lerp each element of buffer;
-    //     for(int i = 0 ; i < ab.size() ; i ++)
-    //     {
-    //         sum += abs(ab.get(i));
-    //         lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.05f);
-    //     }
-    //     average= sum / (float) ab.size();
-
-    //     smoothedAmplitude = lerp(smoothedAmplitude, average, 0.1f);
-        
-    //     //float cx = width / 2;
-    //     //float cy = height / 2;
-
-    //     background(0);
-    //         float rotationSpeed = map(smoothedAmplitude, 0.0f, 1.0f, 0.01f, 0.01f); // Map amplitude to rotation speed
-
-    //         y = height / 2; // Reset y position to center
-
-    //         //float xTranslate = random(-width/2, width/2);
-    //         //float yTranslate = random(-height/2, height/2);
-
-
-    //         // Set the color based on amplitude
-    //         float hue = map(frameCount % 255, 0.0f, 255.0f, 0.0f, 360.0f);
-    //         float saturation = 255;
-    //         float brightness = 255;
-    //         fill(hue, saturation, brightness);
-    //         stroke(hue, saturation, brightness);
-
-    //         // Draw 3D sphere at the center of the screen
-    //         lights();
-    //         translate(width / 2, height / 2);
-    //         rotateY(frameCount * rotationSpeed);
-    //         rotateX(frameCount * rotationSpeed);    
-    //         sphere(100);
-
-
-    //         // Draw waveform lines based on amplitude
-    //         float waveRadius = 200;
-    //         float angleStep = TWO_PI / ab.size();
-
-    //         for (int i = 0; i < ab.size(); i++) {
-    //             float x = sin(angleStep * i) * waveRadius;
-    //             float y = map(ab.get(i), -2, 2, -100 , 100); // Map amplitude to height around the sphere
-    //             float z = cos(angleStep * i) * waveRadius;
-    //             // Translate the waveform point to start from the surface of the sphere
-    //             float scaleFactor = 1.1f; // Scale factor to extend the lines slightly beyond the sphere's surface
-    //             float newX = x * scaleFactor;
-    //             float newY = y * scaleFactor;
-    //             float newZ = z * scaleFactor;
-    //             // Draw the line from the sphere's center to the translated point
-    //             line(0, 0, 0, newX, newY, newZ);
-    //         }
-    // }
+}
 
 }
