@@ -21,6 +21,8 @@ public class RotatingBands extends Visual {
     
     AudioBuffer b;
 
+    float[] lerpedBuffer;
+
 
     PVector lightPosition;
     //float angle = 0;
@@ -61,6 +63,7 @@ public class RotatingBands extends Visual {
         b = ap.mix;
         lightPosition = new PVector(width / 2, height / 2, 200);
         //startListening();
+
         
     }
 
@@ -104,7 +107,7 @@ public class RotatingBands extends Visual {
 
 
         float tot = 0;
-        for(int i = 0 ; i < b.size() ; i ++)
+        for(int i = 0 ; i < b.size() *0.8; i ++)
         {
             tot += abs(b.get(i));
         }
@@ -113,12 +116,14 @@ public class RotatingBands extends Visual {
 
         lerpedAvg = lerp(lerpedAvg, avg, 0.1f);
 
+      
+
         // Draw the object (sphere)
         translate(width / 2, height / 2);
         rotateY(frameCount * 0.01f);
         rotateX(frameCount * 0.01f);
         fill(200, 50, 50);
-        sphereDetail(40);
+        sphereDetail(30);
         sphere(tot);
         
 
@@ -127,28 +132,14 @@ public class RotatingBands extends Visual {
 
 
 
-
-
-
-
-        //float f = lerp(10, 20, 0.2);
-
-        //float a = lerp(a, b, 0.1f);
-
-        
-
         float h = height / 2;
         //float w = width / (float) b.size(); // Width of each segment
-        for(int i = 0 ; i < width*5; i ++)
+        for(int i = 0 ; i < width*6; i ++)
         {
-            bufferIndex += 0.6f; // Adjust value for line length
-            float smoothIndex = (float) (bufferIndex - Math.floor(bufferIndex)); // Wrap-around with smoothing
+            bufferIndex += 0.6f; // Adjust value for line length  +  to get "Speedlines" effect
+            //float smoothIndex = (float) (bufferIndex - Math.floor(bufferIndex)); // Wrap-around with smoothing
 
-
-            float value = b.get((int) Math.floor(bufferIndex) % b.size()); // Use original buffer values
-
-
-
+            float value = b.get((int) Math.floor(bufferIndex) % b.size()); //original buffer values
 
             float hue = map(i, 0, b.size() , 0, 256);
             stroke(bgcolor % 255, 255, 255);
@@ -169,10 +160,8 @@ public class RotatingBands extends Visual {
 
         }
 
-        
-        
-
         /*
+        ** THIS IS ALL THE ORIGINAL USEFUL STUFF FROM ROTATING AUDIO BANDS **
 
         float tot = 0;
         for(int i = 0 ; i < b.size() ; i ++)
@@ -198,11 +187,6 @@ public class RotatingBands extends Visual {
         stroke(100, 255, 255);
         circle(h + 200, lerped, 50);
         */
-
-
-
-        // Drawing code goes here
-        
     }
     float lerped = 0;
 
