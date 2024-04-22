@@ -39,11 +39,12 @@ public class jeff extends Visual {
         PVector velocity;
         float lifespan;
 
+
         Particle(float x, float y, float vx, float vy) 
         {
             position = new PVector(x, y);
             velocity = new PVector(vx, vy);
-            lifespan = 3000;
+            lifespan = 30000;
         }
 
         void update(float amplitude) 
@@ -51,6 +52,14 @@ public class jeff extends Visual {
             float speed = map(amplitude, 0, 1, -2, 2);
             // Move the particle
             position.add(PVector.mult(velocity,speed));
+
+                // Check if the particle is out of the screen
+            if (position.x < 0 || position.x > width || position.y < 0 || position.y > height) 
+            {
+                // Reset particle to exit from the centre cube
+                position.x = width/2;
+                position.y = height/2;
+            }
 
             // Reduce its lifespan
             lifespan -= 1;
@@ -126,15 +135,9 @@ public class jeff extends Visual {
         
         // Frequency bands
         bands = getSmoothedBands();
-
+    
         //Finds amplitude of the song
         float amplitude = getSmoothedAmplitude(); 
-
-  
-        // Update angle for next frame
-        // angle += 0.01;
-        // bgcolor += 0.3;
-        // lerped = lerp(lerped, y, 0.1f);
 
         float tot = 0;
 
@@ -151,7 +154,9 @@ public class jeff extends Visual {
             tot += abs(b.get(i));
         }
         float avg = tot / b.size();
-        lerpedAvg = lerp(lerpedAvg, avg, 0.1f);
+
+        // Smooth the amplitude value
+        smoothedAmplitude = lerp(smoothedAmplitude, avg, 0.1f);
 
         // Update and display particles
         for (int j = 0; j < numParticles; j++) 
@@ -160,32 +165,60 @@ public class jeff extends Visual {
             particles[j].display();
         }
 
+        // Move the origin to the center of the screen
+        // translate(w, h);
+        // rotateY(frameCount * 0.001f);
+        // rotateX(frameCount * 0.001f);
+        // fill(200, 200, 200);
+        // sphereDetail(40);
+        // sphere(sphereR);
+        
+
         //camera postioning
         for(int i = 0 ; i < b.size() ; i ++)
         {
+            //calculates the hue based on the song
+            float hue = map(i, 0, b.size(),0,256);
+
             //rotates camera when buffer is twice the average
             if(b.get(i) > (avg))
             {
-                translate(width /2 ,height /2);
+                translate(w,h);
                 rotateY(frameCount * 0.003f);
-                rotateX(frameCount *0.003f);
+                rotateX(frameCount *0.005f);
 
                 // Adjust the translation based on amplitude
-                float translationFactor = map(amplitude, 0, 1, 0, 50); // Adjust the multiplier as needed
-                spot += translationFactor;
+                float translation = map(amplitude, 0, 1, 0, 30); // Adjust the multiplier as needed
+                spot += translation;
                 translate(spot, spot);
 
-
-                // spot += 10;
-                // translate(spot,spot);
             }
 
-            //Drawing code goes here
-            stroke(bgcolor % 255, 255, 255);
 
+            //Drawing code goes here
+
+            // size of the cubes based on music
+            // float cubeSize = tot;
+            float cubeSize = map(smoothedAmplitude, 0, 1, 50, 400); // Adjusted base size
+
+            // // Check cube is large enough
+            // if (cubeSize < 45)
+            // {
+            //     cubeSize = 55;
+            // }
+            // //checks radius is not too large
+            // if (cubeSize > 250)
+            // {
+            //     while(cubeSize > 250)
+            //     {
+            //         cubeSize -= 5;
+
+            //     }
+            // }
+            stroke(bgcolor % 255, 255, 255);
             // Draw boxes
             fill(200, 200, 200);
-            box(60);
+            box(cubeSize);
 
             fill(50, 200, 200);
 
@@ -195,7 +228,9 @@ public class jeff extends Visual {
             float ellipseWidth = b.get(i) * h;
             float ellipseHeight = h; 
 
+            stroke(hue,255,255);
             ellipse(ellipseX, ellipseY, ellipseWidth, ellipseHeight);
+            // ellipse(oppositeX,oppositeY , ellipseWidth, ellipseHeight);
 
             // Calculate the bottom of the ellipse
             float bottomY = ellipseY + ellipseHeight / 2;
@@ -204,13 +239,16 @@ public class jeff extends Visual {
             float extendedBottomY = bottomY + (b.get(i) * h);
 
             // Draw a line from the bottom of the ellipse
+            stroke(120, 255, 255);
             line(ellipseX, bottomY, ellipseX, extendedBottomY);
         
 
             // Draw a small circle at the bottom of the line
             float circleDiameter = 30;
-            stroke(100, 255, 255);
+            stroke(hue, 255, 255);
             circle(ellipseX, extendedBottomY, circleDiameter);
+
+
         }           
         
     }
