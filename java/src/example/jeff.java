@@ -135,7 +135,7 @@ public class jeff extends Visual {
         
         // Frequency bands
         bands = getSmoothedBands();
-
+    
         //Finds amplitude of the song
         float amplitude = getSmoothedAmplitude(); 
 
@@ -154,7 +154,9 @@ public class jeff extends Visual {
             tot += abs(b.get(i));
         }
         float avg = tot / b.size();
-        lerpedAvg = lerp(lerpedAvg, avg, 0.1f);
+
+        // Smooth the amplitude value
+        smoothedAmplitude = lerp(smoothedAmplitude, avg, 0.1f);
 
         // Update and display particles
         for (int j = 0; j < numParticles; j++) 
@@ -182,20 +184,22 @@ public class jeff extends Visual {
             if(b.get(i) > (avg))
             {
                 translate(w,h);
-                rotateY(frameCount * 0.001f);
-                rotateX(frameCount *0.003f);
+                rotateY(frameCount * 0.003f);
+                rotateX(frameCount *0.005f);
 
                 // Adjust the translation based on amplitude
-                float translation = map(amplitude, 0, 1, 0, 50); // Adjust the multiplier as needed
+                float translation = map(amplitude, 0, 1, 0, 30); // Adjust the multiplier as needed
                 spot += translation;
                 translate(spot, spot);
+
             }
 
 
             //Drawing code goes here
 
             // size of the cubes based on music
-            float cubeSize = tot;
+            // float cubeSize = tot;
+            float cubeSize = map(smoothedAmplitude, 0, 1, 50, 400); // Adjusted base size
 
             // // Check cube is large enough
             // if (cubeSize < 45)
