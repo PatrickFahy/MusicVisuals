@@ -9,11 +9,12 @@ import example.jeff;
 import example.RotatingAudioBands;
 import example.RotatingBands;
 import example.cormac;
+import ie.tudublin.SamVisuals;
 public class Main {
 
     public void startUI() {
         String[] a = { "MAIN" };
-        processing.core.PApplet.runSketch(a, new cormac());
+        processing.core.PApplet.runSketch(a, new jeff());
     }
 
     public static void main(String[] args) {
