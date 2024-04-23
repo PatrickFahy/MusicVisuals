@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "cormac2",
+            "request": "launch",
+            "mainClass": "example.cormac2",
+            "projectName": "java"
+        },
+        {
+            "type": "java",
+            "name": "Cormac2",
+            "request": "launch",
+            "mainClass": "example.Cormac2",
+            "projectName": "java"
+        },
+        {
+            "type": "java",
             "name": "Cormac",
             "request": "launch",
             "mainClass": "example.Cormac",

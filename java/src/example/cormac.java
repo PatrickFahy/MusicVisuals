@@ -18,6 +18,8 @@ public class Cormac extends Visual {
     float centerX, centerY;
     float amplitude = 0;
 
+    int black = 0;
+
     rain[] rains; // Array to hold rains
 
     public void settings() {
@@ -26,6 +28,8 @@ public class Cormac extends Visual {
 
     boolean changeBackground = false;
     int startTime;
+
+    int mode;
 
 
     public void setup() {
@@ -37,8 +41,8 @@ public class Cormac extends Visual {
         centerX = width / 2;
         centerY = height / 2;
 
-        // Initialize array of rains
-        rains = new rain[125]; // Adjust the number of rains as needed
+        // Initialize array of rain drops
+        rains = new rain[125]; // Adjust the number of rain drops as needed
         for (int i = 0; i < rains.length; i++) {
             rains[i] = new rain(random(width), -50, random(10, 30)); // Random x position, start above the screen, random size
         }
@@ -47,24 +51,61 @@ public class Cormac extends Visual {
     }
 
     public void draw() {
-        // Check if 8 seconds have elapsed
-        if (millis() - startTime >= 8000) {
-            changeBackground = true;
+    // Analyze the amplitude of the audio
+    float level = ab.level();
+
+    // Check if the amplitude level is above a certain threshold
+    if (level > 0.15) {
+        changeBackground = true;
+    }
+    else{
+        changeBackground = false;
+    }
+
+    // Clear the background
+    if (changeBackground) {
+        background(0, 0, 80); // Change background to white
+    } else {
+        background(black); // Keep the background black
+    }
+
+
+
+    // Draw and update rains
+    for (rain rain : rains) {
+        rain.update();
+        rain.display();
+    }
+
+    if (changeBackground) {
+        stroke(255, 255, 0);
+        fill(255, 255, 0); // Yellow color
+        triangle(300,50,400,50,300,400);
+        triangle(375,350,450, 350, 350, 700 );
+        rect(300, 350,125,50 );
+
+        // Draw waveform with a yellow line responsive to the audio
+        stroke(255, 255, 0); // Set stroke colour to yellow
+        noFill(); // No fill for the waveform
+        beginShape();
+        for (int i = 0; i < ab.size() - 1; i += 5) {
+            float x = map(i, 0, ab.size(), -width/2, width/2); // Offset by half the width
+            float y = map(ab.get(i), -1, 1, height, 0) * level; // Adjust y position based on audio level
+            vertex(x + width/2, y + 100); // Offset x back to the center
         }
-    
-        // Clear the background
-        if (changeBackground) {
-            background(255); // Change background to white
-        } else {
-            background(0); // Keep the background black
+        endShape();
+
+        stroke(255, 255, 0); // Set stroke color to red for the second waveform
+        beginShape();
+        for (int i = 0; i < ab.size() - 1; i += 5) {
+            float x = map(i, 0, ab.size(), -width/2, width/2); // Offset by half the width
+            float y = map(ab.get(i), -1, 1, 0, height) * level; // Adjust y position based on audio level
+            vertex(x + width/2, y + height/2); // Offset y by half the height and x back to the center
         }
-    
-        // Draw and update rains
-        for (rain rain : rains) {
-            rain.update();
-            rain.display();
-        }
-    
+        endShape();
+
+    }
+
         // drawing of clouds
         stroke(128, 128, 128);
         fill(120, 120, 120);
@@ -73,19 +114,18 @@ public class Cormac extends Visual {
         ellipse(250, 0, 400, 100);
         ellipse(600, 0, 350, 200);
         ellipse(800, 0, 200, 250);
-    
-        // Draw yellow rectangle after 8 seconds
-        if (changeBackground) {
-            fill(255, 255, 0); // Yellow color
-            rect(0, 750, 800, 50); // Draw yellow rectangle
-        }
-    }
+
+        //background drawing
+        fill(black);
+        stroke(black);
+        rect(0,700,800,100);
+}
 
     class rain {
         float x, y; // Position
         float diameter; // Size
         float speed; // Speed of falling
-        float hue; // Hue of the rain
+
     
         rain(float x, float y, float diameter) {
             this.x = x;
