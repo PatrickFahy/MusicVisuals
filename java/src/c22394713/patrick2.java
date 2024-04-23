@@ -1,5 +1,5 @@
 /**
- * Patrick Fahy - scene 2 
+ * C22394713: Patrick Fahy - scene 2 
  * 
  * Using the loadshape command to import my own 3-d model of a dog which I can then
  * manipulate the same as a primitive 3-d object in processing, this is done using
@@ -19,7 +19,15 @@ import ddf.minim.AudioBuffer;
 import ddf.minim.AudioInput;
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
-import ddf.minim.analysis.FFT;
+import ddf.minim.analysis.*;
+import ddf.minim.effects.*;
+import ddf.minim.signals.*;
+import ddf.minim.spi.*;
+import ddf.minim.ugens.*;
+
+
+
+
 
 public class patrick2 extends Visual {
 
@@ -29,6 +37,8 @@ public class patrick2 extends Visual {
 
     AudioBuffer b;
 
+    BeatDetect beat;
+
     float[] lerpedBuffer;
 
 
@@ -37,7 +47,7 @@ public class patrick2 extends Visual {
     PShape ball;
     float bgcolor = 0;
 
-    float ry;
+
     float theta;
 
     String myText = "WE'VE GOT TO TRY";
@@ -69,6 +79,9 @@ public class patrick2 extends Visual {
     ap = m.loadFile("The Chemical Brothers - We've Got To Try.mp3"); //java\data\The Chemical Brothers - We've Got To Try.mp3
     ap.play();
 
+    beat = new BeatDetect();
+    beat.setSensitivity(400);
+
 
     //size(800, 800, P3D);
     myFont = createFont("Arial", 32);
@@ -87,34 +100,44 @@ public class patrick2 extends Visual {
  float lerped = 0;
  float lerpedAvg = 0;
  float bufferIndex = 0.0f; // Index for smooth looping within the buffer
+
+ long lastBeatTime = 0; // Stores the time of the last beat detection
  
  public void draw() {
-   background(0);
-   lights();
-   lerped = lerp(lerped, y, 0.1f);
-
-   float tot = 0;
-
-        for(int i = 0 ; i < b.size() *0.8; i ++)
-        {
-            tot += abs(b.get(i));
+    beat.detect(b);
+    // Check if a second has passed since the last beat
+    if (millis() - lastBeatTime >= 10) {
+        if (beat.isOnset()) {
+            background(0); // Change background on beat (once per second)
         }
+        lastBeatTime = millis(); // Update last beat time
+    }
+    //background(0);
+    lights();
+    lerped = lerp(lerped, y, 0.1f);
+    
+    float tot = 0;
+
+    for(int i = 0 ; i < b.size() *0.8; i ++)
+    {
+        tot += abs(b.get(i));
+    }
 
     float avg = tot / b.size();
 
     lerpedAvg = lerp(lerpedAvg, avg, 0.1f);
    
-   pushMatrix();
-   translate(width/2, height/1.5f);
-   rotate(-PI);
-   rotateY(theta/2);
-   scale(2.0f);
-   shape(ball);
-   popMatrix();
+    pushMatrix();
+    translate(width/2, height/1.5f);
+    rotate(-PI);
+    rotateY(theta/2);
+    scale(2.0f);
+    shape(ball);
+    popMatrix();
 
    //fill(0, 255, 0); // Set object to green (flat color)
    //tint(255, 0, 0); // Set object to red
-
+   
    fill(bgcolor % 255, 255, 255, 100); // Adjust transparency as needed
    //stroke(bgcolor % 255, 255, 255);
 
@@ -137,17 +160,6 @@ public class patrick2 extends Visual {
 
         }
     }
-
-    for (int y = 0; y < height; y += spacingY) {
-        for (int x = 0; x > 0; x -= spacingX) {
-            text(myText, x, y);
-            text(myText, -x, -y);
-
-        }
-    }
-
-
-
 
     popMatrix();
     theta += 0.01f + tot/1250;

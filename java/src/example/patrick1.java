@@ -1,4 +1,7 @@
 /**
+ *   **From Processing.org Website**
+ * 
+ * 
  * Load and Display an OBJ Shape. 
  * 
  * The loadShape() command is used to read simple SVG (Scalable Vector Graphics)
@@ -35,8 +38,6 @@ public class patrick1 extends Visual {
 
     PShape ball;
     float bgcolor = 0;
-
-    float ry;
     float theta;
 
     String myText = "WE'VE GOT TO TRY";
@@ -133,17 +134,12 @@ public class patrick1 extends Visual {
         for (int x = 0; x < width; x += spacingX) {
             text(myText, x, y);
             text(myText, -x, -y);
+            text(myText, x, -y);
+            text(myText, -x, y);
 
         }
     }
 
-    for (int y = 0; y < height; y += spacingY) {
-        for (int x = 0; x > 0; x -= spacingX) {
-            text(myText, x, y);
-            text(myText, -x, -y);
-
-        }
-    }
 
 
 

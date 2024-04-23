@@ -1,3 +1,14 @@
+/**
+ * C22394713: Patrick Fahy - scene 1 
+ * 
+ * Using the lights() and lighting commands to load a 3-d model primitive of a sphere with a mesh
+ * in processing, and then using the Audio/Sound buffer to create waveforms which rotate about the poles
+ * of the sphere and I also used Audio/Sound buffer manipulation to control the size/lerping of the
+ * sphere.
+ * 
+ */
+
+
 package c22394713;
 
 import ie.tudublin.Visual;
