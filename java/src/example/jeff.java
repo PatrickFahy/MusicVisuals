@@ -163,25 +163,11 @@ public class jeff extends Visual {
             particles[j].update(tot);
             particles[j].display();
         }
-
-        // Move the origin to the center of the screen
-        // translate(w, h);
-        // rotateY(frameCount * 0.001f);
-        // rotateX(frameCount * 0.001f);
-        // fill(200, 200, 200);
-        // sphereDetail(40);
-        // sphere(sphereR);
-        // Draw the object (sphere)
         
         float cubeSize = map(smoothedAmplitude, 0, 1, 50, 400); // Adjusted base size
 
-        // translate(width / 2, height / 2);
-        rotateY(frameCount * 0.0009f);
-        rotateX(frameCount * 0.0001f);
-        // translate(width / 2, height / 2);
-        // fill(200, 50, 50);
-        // box(cubeSize);
-        translate(spot,spot);
+        //keeps it centered
+        translate(w, h);
 
         //camera postioning
         for(int i = 0 ; i < b.size() ; i ++)
@@ -190,36 +176,34 @@ public class jeff extends Visual {
             float hue = map(i, 0, b.size(),0,256);
 
 
-
             //rotates camera when buffer is twice the average
             if(b.get(i) > (avg))
             {
-                translate(w,h);
-                rotateY(frameCount * 0.003f);
-                rotateX(frameCount *0.005f);
-                // translate(spot, spot);
+                rotateY(frameCount * 0.0004f);
+                rotateX(frameCount * 0.002f);
+
+                // rotateY(frameCount * 0.002f);
+                // rotateX(frameCount *0.009f);
+
                 // Adjust the translation based on amplitude
                 float translation = map(amplitude, 0, 1, 0, 50); // Adjust the multiplier as needed
                 spot += translation;
+                // translate(spot, spot);
+                stroke(bgcolor % 255, 255, 255);
+                fill(200, 200, 200);
+
+                box(cubeSize);
             }
-            
-            //Drawing code goes here
-            
-            stroke(bgcolor % 255, 255, 255);
-            // Draw boxes
+
             translate(spot, spot);
-            fill(200, 200, 200);
-            box(cubeSize);
-
-            fill(50, 200, 200);
-
             // Draw the ellipse
-            float ellipseX = 30 + w * 2;
+            float ellipseX = w * 2;
             float ellipseY = h * 2;
-            float ellipseWidth = b.get(i) * h;
+            float ellipseWidth = b.get(i) * h/2;
             float ellipseHeight = h; 
 
-            stroke(hue,255,255);
+            fill(50, 200, 200);
+            stroke(hue,hue,hue);
             ellipse(ellipseX, ellipseY, ellipseWidth, ellipseHeight);
 
             // Calculate the bottom of the ellipse
@@ -229,14 +213,13 @@ public class jeff extends Visual {
             float extendedBottomY = bottomY + (b.get(i) * h);
 
             // Draw a line from the bottom of the ellipse
-            stroke(120, 255, 255);
+            fill(hue, hue, hue);
             line(ellipseX, bottomY, ellipseX, extendedBottomY);
-        
 
-            // Draw a small circle at the bottom of the line
-            float circleDiameter = 30;
-            stroke(hue, 255, 255);
-            circle(ellipseX, extendedBottomY, circleDiameter);
+            // Draw a lines from both sides of the cube
+            line(0,0,100,100);
+            line(100,100,-100,-100);
+        
         }           
     }
     float lerped = 0;
