@@ -102,6 +102,8 @@ public class patrick2 extends Visual {
  float bufferIndex = 0.0f; // Index for smooth looping within the buffer
 
  long lastBeatTime = 0; // Stores the time of the last beat detection
+ long lastColorChange = 0; // Stores the time of the last bgcolor update
+
  
  public void draw() {
     beat.detect(b);
@@ -162,8 +164,10 @@ public class patrick2 extends Visual {
     }
 
     popMatrix();
-    theta += 0.01f + tot/1250;
-    bgcolor += 0.3 + tot;
+
+
+    theta += 0.01f + tot/1625;
+    bgcolor += 0.3 + tot/2;
 
    
  }
