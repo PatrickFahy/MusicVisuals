@@ -7,7 +7,7 @@ import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
 import processing.core.PApplet;
 
-public class Cormac extends Visual {
+public class cormac extends Visual {
     Minim minim;
     AudioPlayer ap;
     AudioInput ai;
