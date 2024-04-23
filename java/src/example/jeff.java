@@ -62,7 +62,7 @@ public class jeff extends Visual {
             }
 
             // Reduce its lifespan
-            lifespan -= 1;
+            lifespan -=  1;
         }
 
         void display() 

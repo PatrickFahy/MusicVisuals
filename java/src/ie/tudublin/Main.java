@@ -11,18 +11,18 @@ import example.patrick1;
 
 import example.RotatingAudioBands;
 import example.RotatingBands;
-import example.SamVisuals;
 import c22394713.c22394713;
 import c22394713.patrick2;
 
 import example.cormac2;
 
 import example.cormac;
+import example.SamVisuals;
 public class Main {
 
     public void startUI() {
         String[] a = { "MAIN" };
-        processing.core.PApplet.runSketch(a, new SamVisuals());
+        processing.core.PApplet.runSketch(a, new patrick());
     }
 
     public static void main(String[] args) {
