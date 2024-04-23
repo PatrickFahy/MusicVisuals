@@ -30,7 +30,7 @@ public class jeff extends Visual {
 
     Particle[] particles;
     // Number of particles displayed
-    int numParticles = 100; 
+    int numParticles = 50; 
 
     // Particle class
     class Particle 
@@ -47,11 +47,11 @@ public class jeff extends Visual {
             lifespan = 30000;
         }
 
-        void update(float amplitude) 
+        void update(float tot) 
         {
-            float speed = map(amplitude, 0, 1, -2, 2);
+    
             // Move the particle
-            position.add(PVector.mult(velocity,speed));
+            position.add(PVector.mult(velocity,tot/8));
 
                 // Check if the particle is out of the screen
             if (position.x < 0 || position.x > width || position.y < 0 || position.y > height) 
@@ -73,7 +73,6 @@ public class jeff extends Visual {
             ellipse(position.x, position.y, 10, 10);
         }
     }
-
 
     public void settings()
     {
@@ -161,7 +160,7 @@ public class jeff extends Visual {
         // Update and display particles
         for (int j = 0; j < numParticles; j++) 
         {
-            particles[j].update(amplitude);
+            particles[j].update(tot);
             particles[j].display();
         }
 
@@ -172,7 +171,17 @@ public class jeff extends Visual {
         // fill(200, 200, 200);
         // sphereDetail(40);
         // sphere(sphereR);
+        // Draw the object (sphere)
         
+        float cubeSize = map(smoothedAmplitude, 0, 1, 50, 400); // Adjusted base size
+
+        // translate(width / 2, height / 2);
+        rotateY(frameCount * 0.0009f);
+        rotateX(frameCount * 0.0001f);
+        // translate(width / 2, height / 2);
+        // fill(200, 50, 50);
+        // box(cubeSize);
+        translate(spot,spot);
 
         //camera postioning
         for(int i = 0 ; i < b.size() ; i ++)
@@ -180,57 +189,38 @@ public class jeff extends Visual {
             //calculates the hue based on the song
             float hue = map(i, 0, b.size(),0,256);
 
+
+
             //rotates camera when buffer is twice the average
             if(b.get(i) > (avg))
             {
                 translate(w,h);
                 rotateY(frameCount * 0.003f);
                 rotateX(frameCount *0.005f);
-
+                // translate(spot, spot);
                 // Adjust the translation based on amplitude
-                float translation = map(amplitude, 0, 1, 0, 30); // Adjust the multiplier as needed
+                float translation = map(amplitude, 0, 1, 0, 50); // Adjust the multiplier as needed
                 spot += translation;
-                translate(spot, spot);
-
             }
-
-
+            
             //Drawing code goes here
-
-            // size of the cubes based on music
-            // float cubeSize = tot;
-            float cubeSize = map(smoothedAmplitude, 0, 1, 50, 400); // Adjusted base size
-
-            // // Check cube is large enough
-            // if (cubeSize < 45)
-            // {
-            //     cubeSize = 55;
-            // }
-            // //checks radius is not too large
-            // if (cubeSize > 250)
-            // {
-            //     while(cubeSize > 250)
-            //     {
-            //         cubeSize -= 5;
-
-            //     }
-            // }
+            
             stroke(bgcolor % 255, 255, 255);
             // Draw boxes
+            translate(spot, spot);
             fill(200, 200, 200);
             box(cubeSize);
 
             fill(50, 200, 200);
 
             // Draw the ellipse
-            float ellipseX = w * 2;
+            float ellipseX = 30 + w * 2;
             float ellipseY = h * 2;
             float ellipseWidth = b.get(i) * h;
             float ellipseHeight = h; 
 
             stroke(hue,255,255);
             ellipse(ellipseX, ellipseY, ellipseWidth, ellipseHeight);
-            // ellipse(oppositeX,oppositeY , ellipseWidth, ellipseHeight);
 
             // Calculate the bottom of the ellipse
             float bottomY = ellipseY + ellipseHeight / 2;
@@ -247,10 +237,7 @@ public class jeff extends Visual {
             float circleDiameter = 30;
             stroke(hue, 255, 255);
             circle(ellipseX, extendedBottomY, circleDiameter);
-
-
         }           
-        
     }
     float lerped = 0;
 }
