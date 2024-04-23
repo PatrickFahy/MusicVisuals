@@ -13,9 +13,7 @@ import example.RotatingAudioBands;
 import example.RotatingBands;
 import c22394713.c22394713;
 import c22394713.patrick2;
-
 import example.cormac2;
-
 import example.cormac;
 import example.SamVisuals;
 public class Main {

@@ -90,7 +90,6 @@ public class jeff extends Visual {
         }
  
     }
-
     public void setup()
     {
         colorMode(HSB);
@@ -98,7 +97,6 @@ public class jeff extends Visual {
         m = new Minim(this);
         ap = m.loadFile("The Chemical Brothers - We've Got To Try.mp3");
         ap.play();
-        
         b = ap.mix;
 
         lightPosition = new PVector(width / 2, height / 2, 200);
@@ -128,13 +126,7 @@ public class jeff extends Visual {
         stroke(255);
         lights();
         stroke(map(getSmoothedAmplitude(), 0, 1, 0, 255), 255, 255);
-
-        // increase rotation based on song
-        rot += getAmplitude() / 20.0f; 
         
-        // Frequency bands
-        bands = getSmoothedBands();
-    
         //Finds amplitude of the song
         float amplitude = getSmoothedAmplitude(); 
 
@@ -182,16 +174,11 @@ public class jeff extends Visual {
                 rotateY(frameCount * 0.0004f);
                 rotateX(frameCount * 0.002f);
 
-                // rotateY(frameCount * 0.002f);
-                // rotateX(frameCount *0.009f);
-
                 // Adjust the translation based on amplitude
                 float translation = map(amplitude, 0, 1, 0, 50); // Adjust the multiplier as needed
                 spot += translation;
-                // translate(spot, spot);
                 stroke(bgcolor % 255, 255, 255);
                 fill(200, 200, 200);
-
                 box(cubeSize);
             }
 
