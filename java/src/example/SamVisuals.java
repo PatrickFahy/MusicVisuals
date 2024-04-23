@@ -1,7 +1,7 @@
 package example;
 
 import ddf.minim.AudioBuffer;
-import ddf.minim.AudioInput;
+import ddf.minim.analysis.FFT;
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
 import processing.core.PApplet;
@@ -10,10 +10,10 @@ public class SamVisuals extends PApplet {
     Minim minim;
     AudioPlayer ap;
     AudioBuffer ab;
+    FFT fft;
 
     float[] lerpedBuffer;
     float smoothedAmplitude = 0;
-
     VisualShape[] shapes;
     int screen_size = 800;
     boolean sceneActive = true;
@@ -24,23 +24,27 @@ public class SamVisuals extends PApplet {
 
     public void setup() {
         minim = new Minim(this);
-        ap = minim.loadFile("java\\data\\The Chemical Brothers - We've Got To Try.mp3", screen_size);
+        ap = minim.loadFile("java\\data\\The Chemical Brothers - We've Got To Try.mp3", 1024);
         ap.play();
         ab = ap.mix;
+        fft = new FFT(ap.bufferSize(), ap.sampleRate());
         colorMode(HSB);
 
         lerpedBuffer = new float[width];
-        shapes = new VisualShape[20]; // Allow for up to 20 shapes initially
+        shapes = new VisualShape[50];
         for (int i = 0; i < shapes.length; i++) {
-            shapes[i] = new VisualShape(random(width), random(height), (int) random(3)); // Initialize with various shape types
+            shapes[i] = new VisualShape(random(width), random(height), (int) random(3));
         }
     }
 
     public void draw() {
-        background(smoothedAmplitude * 255, 100, 100);
+        fft.forward(ab);
+        float bass = fft.calcAvg(40, 80);
+        float treble = fft.calcAvg(5000, 10000);
+        background(bass * 900 % 255, 255, treble * 900 % 255);
 
         float sum = 0;
-        for (int i = 0; i < ab.size(); i++) {
+        for (int i = 0; i < 799; i++) {
             sum += abs(ab.get(i));
             lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.1f);
         }
@@ -48,11 +52,11 @@ public class SamVisuals extends PApplet {
         smoothedAmplitude = lerp(smoothedAmplitude, average, 0.2f);
 
         for (VisualShape shape : shapes) {
-            shape.update();
+            shape.update(bass);
             shape.display();
         }
 
-        if (sceneActive && millis() > 20000) { // Change scenes after 20 seconds
+        if (sceneActive && millis() > 20000) {
             sceneActive = false;
             changeScene();
         }
@@ -60,7 +64,7 @@ public class SamVisuals extends PApplet {
 
     void changeScene() {
         for (int i = 0; i < shapes.length; i++) {
-            shapes[i] = new VisualShape(random(width), random(height), (int) random(3)); // Reinitialize with new shape types
+            shapes[i] = new VisualShape(random(width), random(height), (int) random(3));
         }
     }
 
@@ -78,40 +82,45 @@ public class SamVisuals extends PApplet {
             this.hue = random(255);
         }
 
-        void update() {
-            x += random(-1, 1) * smoothedAmplitude * 20;
-            y += random(-1, 1) * smoothedAmplitude * 20;
-            size = lerp(size, size + sin(frameCount * 0.1f) * 20, 0.05f);
+        void update(float bass) {
+            x += random(-1, 1) * bass;
+            y += random(-1, 1) * bass;
+            size = lerp(size, size + sin(frameCount * 0.1f) * bass * 5, 0.05f);
         }
 
         void display() {
-            stroke(hue, 255, 255);
-            noFill();
-            strokeWeight(2);
+            fill(hue, 255, 255, 200);
+            noStroke();
+            pushMatrix();
+            translate(x, y);
             switch (type) {
                 case 0:
-                    ellipse(x, y, size, size);
+                    sphere(size); // 3D sphere instead of ellipse
                     break;
                 case 1:
-                    rectMode(CENTER);
-                    rect(x, y, size, size);
+                    box(size, size, size); // 3D box instead of rect
                     break;
                 case 2:
-                    beginShape();
-                    for (int i = 0; i < 6; i++) { // Draw a hexagon
-                        float angle = TWO_PI / 6 * i;
-                        float vx = x + cos(angle) * size;
-                        float vy = y + sin(angle) * size;
-                        vertex(vx, vy);
-                    }
-                    endShape(CLOSE);
+                    createHexagon(size); // 3D hexagon
                     break;
             }
+            popMatrix();
+        }
+
+        void createHexagon(float size) {
+            beginShape(TRIANGLE_FAN);
+            vertex(0, 0, 0); // center vertex
+            for (int i = 0; i <= 6; i++) { // Creating a circular fan
+                float angle = TWO_PI / 6 * i;
+                vertex(size * cos(angle), size * sin(angle), size); // Adding Z dimension for 3D effect
+            }
+            endShape(CLOSE);
         }
     }
 
     public static void main(String[] args) {
-        PApplet.main("ie.tudublin.SamVisuals");
+        PApplet.main("example.SamVisuals");
     }
 }
+
 
