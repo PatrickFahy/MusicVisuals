@@ -14,13 +14,15 @@ import example.RotatingBands;
 import c22394713.c22394713;
 import c22394713.patrick2;
 
+import example.cormac2;
+
 import example.cormac;
 import ie.tudublin.SamVisuals;
 public class Main {
 
     public void startUI() {
         String[] a = { "MAIN" };
-        processing.core.PApplet.runSketch(a, new patrick2());
+        processing.core.PApplet.runSketch(a, new cormac2());
     }
 
     public static void main(String[] args) {
