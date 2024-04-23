@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SamVisuals",
+            "request": "launch",
+            "mainClass": "ie.tudublin.SamVisuals",
+            "projectName": "java"
+        },
+        {
+            "type": "java",
             "name": "cormac2",
             "request": "launch",
             "mainClass": "example.cormac2",
