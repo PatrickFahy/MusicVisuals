@@ -20,6 +20,7 @@ public class Main {
 
     public void startUI() {
         String[] a = { "MAIN" };
+        processing.core.PApplet.runSketch(a, new SamVisuals());
         processing.core.PApplet.runSketch(a, new jeff());
     }
 

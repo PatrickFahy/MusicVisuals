@@ -71,62 +71,65 @@ public class SamVisuals extends PApplet {
         }
     }
 
+    // Creates the shapes
     class VisualShape {
-        float x, y;
-        float size;
-        int type;
-        float hue;
-
+        float x, y;  // Variables for the x and y coordinates of the shape's position
+        float size;  // Variable for the size of the shape
+        int type;  // Type of shape
+        float hue;  // Shape colour
+    
         VisualShape(float x, float y, int type) {
-            this.x = constrain(x, 0, maxWidth); // Ensure x does not exceed maxWidth
-            this.y = constrain(y, 0, maxHeight); // Ensure y does not exceed maxHeight
-            this.size = random(10, 50);
-            this.type = type;
-            this.hue = random(255);
+            this.x = constrain(x, 0, maxWidth); // Ensures that the x-coordinate doesn't exceed the max width
+            this.y = constrain(y, 0, maxHeight); // Ensures that the y-coordinate doesn't exceed the max height
+            this.size = random(10, 50); // Sets the shape size to a random value between 10 and 50
+            this.type = type; // Sets the type of the shape
+            this.hue = random(255); // Sets the colour hue of the shape
         }
-
+    
+        // Method to change the shape's position and size based on the bass level of the music
         void update(float bass) {
-            x += random(-1, 1) * bass;
+            x += random(-1, 1) * bass; // Randomly adjusts the coordinates based on the bass (moves shapes)
             y += random(-1, 1) * bass;
-            x = constrain(x, 0, maxWidth); // Keep x within the maxWidth
-            y = constrain(y, 0, maxHeight); // Keep y within the maxHeight
-            size = lerp(size, size + sin(frameCount * 0.1f) * bass * 5, 0.05f); // Update size
+            x = constrain(x, 0, maxWidth);
+            y = constrain(y, 0, maxHeight); 
+            size = lerp(size, size + sin(frameCount * 0.1f) * bass * 5, 0.05f); // Changes the size based on the bass and the frame count (pulsating effect)
         }
-
+    
+        // Method to display the shapes
         void display() {
-            fill(hue, 255, 255, 200);
-            noStroke();
-            pushMatrix();
-            translate(x, y);
-            switch (type) {
+            fill(hue, 255, 255, 200); // Sets the fill color and an alpha value of 200 for transparency.
+            noStroke(); // Stops drawing an outline around the shapes
+            pushMatrix(); // Saves the current drawing matrix
+            translate(x, y); // Translates the matrix to the x and y coordinates
+            switch (type) { // Drawing the shapes based on the type
                 case 0:
-                    sphere(size); // 3D sphere instead of ellipse
+                    sphere(size); // Draws a sphere
                     break;
                 case 1:
-                    box(size, size, size); // 3D box instead of rect
+                    box(size, size, size); // Draws a box with dimensions
                     break;
                 case 2:
-                    createHexagon(size); // 3D hexagon
+                    createHexagon(size); // Draws a hexagon
                     break;
             }
-            popMatrix();
+            popMatrix(); // Restores the previously saved drawing matrix
         }
-
+    
+        // Method to create a hexagon shape
         void createHexagon(float size) {
-            beginShape(TRIANGLE_FAN);
-            vertex(0, 0, 0); // center vertex
-            for (int i = 0; i <= 6; i++) { // Creating a circular fan
-                float angle = TWO_PI / 6 * i;
-                vertex(size * cos(angle), size * sin(angle), size); // Adding Z dimension for 3D effect
+            beginShape(TRIANGLE_FAN); // Drawing a hexagon defined by connecting triangles radiating from a central vertex.
+            vertex(0, 0, 0); // Sets the central vertex
+            for (int i = 0; i <= 6; i++) { // Loops to create the six vertices of the hexagon and one to close the shape
+                float angle = TWO_PI / 6 * i; // Calculates the angle for each vertex
+                vertex(size * cos(angle), size * sin(angle), size); // Sets each vertex at an angle and at a distance based on size
             }
-            endShape(CLOSE);
+            endShape(CLOSE); // Closes the shape
         }
     }
+    
 
+    // Connects to main
     public static void main(String[] args) {
         PApplet.main("example.SamVisuals");
     }
 }
-
-
-
