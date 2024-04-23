@@ -14,6 +14,8 @@ import example.RotatingBands;
 import c22394713.c22394713;
 import c22394713.patrick2;
 
+import example.cormac;
+import ie.tudublin.SamVisuals;
 public class Main {
 
     public void startUI() {
