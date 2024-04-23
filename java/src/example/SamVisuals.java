@@ -1,4 +1,4 @@
-package ie.tudublin;
+package example;
 
 import ddf.minim.AudioBuffer;
 import ddf.minim.AudioInput;
@@ -24,7 +24,7 @@ public class SamVisuals extends PApplet {
 
     public void setup() {
         minim = new Minim(this);
-        ap = minim.loadFile("C:\\Users\\Sam O'Connor\\Desktop\\OOP_Project\\MusicVisuals\\java\\data\\The Chemical Brothers - We've Got To Try.mp3", screen_size);
+        ap = minim.loadFile("java\\data\\The Chemical Brothers - We've Got To Try.mp3", screen_size);
         ap.play();
         ab = ap.mix;
         colorMode(HSB);
@@ -114,4 +114,6 @@ public class SamVisuals extends PApplet {
         PApplet.main("ie.tudublin.SamVisuals");
     }
 }
+
+
 
