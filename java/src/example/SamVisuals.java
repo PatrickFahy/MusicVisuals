@@ -115,3 +115,8 @@ public class SamVisuals extends PApplet {
     }
 }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> f032abdccc38436f5b47095f5794d3b063a664d0

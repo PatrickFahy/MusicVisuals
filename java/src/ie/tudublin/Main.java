@@ -22,7 +22,11 @@ public class Main {
 
     public void startUI() {
         String[] a = { "MAIN" };
+<<<<<<< HEAD
+        processing.core.PApplet.runSketch(a, new SamVisuals());
+=======
         processing.core.PApplet.runSketch(a, new patrick2());
+>>>>>>> 978c13713716a1fd918453b07ae7ec79cb9d6920
     }
 
     public static void main(String[] args) {

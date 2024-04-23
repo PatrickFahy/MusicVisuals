@@ -9,6 +9,8 @@
         },
         {
             "type": "java",
+<<<<<<< HEAD
+=======
             "name": "cormac2",
             "request": "launch",
             "mainClass": "example.cormac2",
@@ -23,6 +25,7 @@
         },
         {
             "type": "java",
+>>>>>>> 978c13713716a1fd918453b07ae7ec79cb9d6920
             "name": "Cormac",
             "request": "launch",
             "mainClass": "example.Cormac",
