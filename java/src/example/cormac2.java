@@ -78,7 +78,7 @@ public class cormac2 extends Visual {
         // Draw cube with size determined by audio amplitude
         pushMatrix(); // Save current transformation matrix
         translate(x, y, z); // Translate to position
-        stroke(255); // White outline
+        stroke(cubeColor); // White outline
         fill(cubeColor); // Random fill color
         box(size); // Draw cube
         popMatrix(); // Restore previous transformation matrix

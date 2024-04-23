@@ -44,8 +44,9 @@ public class cormac extends Visual {
         // Initialize array of rain drops
         rains = new rain[125]; // Adjust the number of rain drops as needed
         for (int i = 0; i < rains.length; i++) {
-            rains[i] = new rain(random(width), -50, random(10, 30)); // Random x position, start above the screen, random size
+            rains[i] = new rain(random(width), random(0, 500), random(10, 30)); // Random x and y positions, random size
         }
+
 
         startTime = millis(); // Record the start time
     }
