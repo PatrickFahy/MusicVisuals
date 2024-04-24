@@ -1,7 +1,8 @@
 package ie.tudublin;
 
-import processing.core.PApplet;
+import processing.core.*;
 import ddf.minim.*;
+import ddf.minim.analysis.*;
 import ddf.minim.analysis.FFT;
 
 public abstract class Visual extends PApplet
@@ -14,15 +15,32 @@ public abstract class Visual extends PApplet
 
 	private Minim minim;
 	private AudioInput ai;
-	private AudioPlayer ap;
+	AudioPlayer ap;
 	private AudioBuffer ab;
 	private FFT fft;
+	BeatDetect beat;
+	BeatListener bl;
 
 	private float amplitude  = 0;
 	private float smothedAmplitude = 0;
 
-	
-	
+// Patrick Variables ---------------
+	PShape ball;
+    float bgcolor = 0;
+    float theta;
+    String myText = "WE'VE GOT TO TRY";
+    PFont myFont;
+	PVector lightPosition = new PVector(width / 2, height / 2, 200);	
+
+	public BeatDetect getBeat() {
+		return beat;
+	}
+
+	public void setBeat(BeatDetect beat) {
+		this.beat = beat;
+	}
+// End Patrick Variables ---------------
+
 	public void startMinim() 
 	{
 		minim = new Minim(this);
@@ -81,14 +99,18 @@ public abstract class Visual extends PApplet
 
 	public void startListening()
 	{
-		ai = minim.getLineIn(Minim.MONO, frameSize, 44100, 16);
-		ab = ai.left;
+		//ap.loop();
+		ap.play();
 	}
 
 	public void loadAudio(String filename)
 	{
 		ap = minim.loadFile(filename, frameSize);
 		ab = ap.mix;
+	}
+
+	public void settings(){
+		size(1024, 1000, P3D);
 	}
 
 	public int getFrameSize() {
@@ -143,4 +165,27 @@ public abstract class Visual extends PApplet
 	public FFT getFFT() {
 		return fft;
 	}
+}
+
+class BeatListener implements AudioListener
+{
+  private BeatDetect beat;
+  private AudioPlayer source;
+  
+  BeatListener(BeatDetect beat, AudioPlayer source)
+  {
+    this.source = source;
+    this.source.addListener(this);
+    this.beat = beat;
+  }
+  
+  public void samples(float[] samps)
+  {
+    beat.detect(source.mix);
+  }
+  
+  public void samples(float[] sampsL, float[] sampsR)
+  {
+    beat.detect(source.mix);
+  }
 }
