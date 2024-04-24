@@ -7,7 +7,7 @@ import ddf.minim.Minim;
 import processing.core.PApplet;
 
 public class SamVisuals extends PApplet {
-    Minim minim; // Variable declared for audio operations like loading files
+    Minim minim; // Audio operations
     AudioPlayer ap; // Controls playback of audiofile
     AudioBuffer ab; // Synchronizes the graphics with the music
     FFT fft; // Manages the frequency spectrum of music
@@ -33,10 +33,11 @@ public class SamVisuals extends PApplet {
         colorMode(HSB); // Sets the color mode
 
         lerpedBuffer = new float[width]; // Array (window width size) to store lerped audio
-        shapes = new VisualShape[50]; // sketch will manage 50 shapes
+        shapes = new VisualShape[50]; // Sketch will manage 50 shapes
         for (int i = 0; i < shapes.length; i++) { // For loop randomizes the shape type and position
             shapes[i] = new VisualShape(random(maxWidth), random(maxHeight), (int) random(3));
         }
+        perspective(PI/3, (float)width/height, 0.1f, 5000); // Adjust the field of view
     }
 
     public void draw() {
@@ -48,7 +49,7 @@ public class SamVisuals extends PApplet {
         float sum = 0;
         for (int i = 0; i < 799; i++) { // Max audio size is 800
             sum += abs(ab.get(i)); // Sets the value of each audio sample to sum (positive value)
-            lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.1f); // lerp function calculates between the previous buffer value and the current one
+            lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.1f); // Lerp function calculates between the previous buffer value and the current one
         }
         float average = sum / ab.size(); // Average amplitude
         smoothedAmplitude = lerp(smoothedAmplitude, average, 0.2f); // Smooths the average amplitude to control the visual response to changes in sound level
@@ -73,17 +74,18 @@ public class SamVisuals extends PApplet {
 
     // Creates the shapes
     class VisualShape {
-        float x, y;  // Variables for the x and y coordinates of the shape's position
+        float x, y, z;  // Variables for the x and y coordinates of the shape's position
         float size;  // Variable for the size of the shape
         int type;  // Type of shape
-        float hue;  // Shape colour
+        float colour;  // Shape colour
     
         VisualShape(float x, float y, int type) {
             this.x = constrain(x, 0, maxWidth); // Ensures that the x-coordinate doesn't exceed the max width
             this.y = constrain(y, 0, maxHeight); // Ensures that the y-coordinate doesn't exceed the max height
             this.size = random(10, 50); // Sets the shape size to a random value between 10 and 50
             this.type = type; // Sets the type of the shape
-            this.hue = random(255); // Sets the colour hue of the shape
+            this.colour = random(255); // Sets the colour of the shape
+            this.z = random(-200, -50); // Added z-coordinate placing shapes further from the screen
         }
     
         // Method to change the shape's position and size based on the bass level of the music
@@ -91,16 +93,17 @@ public class SamVisuals extends PApplet {
             x += random(-1, 1) * bass; // Randomly adjusts the coordinates based on the bass (moves shapes)
             y += random(-1, 1) * bass;
             x = constrain(x, 0, maxWidth);
-            y = constrain(y, 0, maxHeight); 
+            y = constrain(y, 0, maxHeight);
+            z += sin(frameCount * 0.1f) * bass * 10;
             size = lerp(size, size + sin(frameCount * 0.1f) * bass * 5, 0.05f); // Changes the size based on the bass and the frame count (pulsating effect)
         }
     
         // Method to display the shapes
         void display() {
-            fill(hue, 255, 255, 200); // Sets the fill color and an alpha value of 200 for transparency.
+            fill(colour, 255, 255, 200); // Sets the fill colour and a value of 200 for transparency.
             noStroke(); // Stops drawing an outline around the shapes
             pushMatrix(); // Saves the current drawing matrix
-            translate(x, y); // Translates the matrix to the x and y coordinates
+            translate(x, y, -size * 2); // Translates the matrix to the x and y coordinates (pushed further back)
             switch (type) { // Drawing the shapes based on the type
                 case 0:
                     sphere(size); // Draws a sphere
