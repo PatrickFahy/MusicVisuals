@@ -1,4 +1,4 @@
-package example;
+package ie.tudublin;
 
 import ddf.minim.AudioBuffer;
 import ddf.minim.analysis.FFT;
@@ -26,7 +26,7 @@ public class SamVisuals extends PApplet {
 
     public void setup() {
         minim = new Minim(this); // Initializes a new Minim audio library with the current code as context
-        ap = minim.loadFile("java\\data\\The Chemical Brothers - We've Got To Try.mp3", 1024); // Function to add the song
+        ap = minim.loadFile("The Chemical Brothers - We've Got To Try.mp3", 1024); // Function to add the song
         ap.play(); // Plays the music
         ab = ap.mix; // Gets the mixed buffer from the audio player
         fft = new FFT(ap.bufferSize(), ap.sampleRate()); // Analysing the song frequency
