@@ -45,12 +45,16 @@ public class ProjectVisual extends Visual {
         
         if (key == '1')
         {
+            pushMatrix();
             play = new patrick2(this);
+            popMatrix();
         }
         
         if (key == '2')
         {
+            pushMatrix();
             play = new c22394713(this);
+            popMatrix();
         }
 
         if ( key == '3')

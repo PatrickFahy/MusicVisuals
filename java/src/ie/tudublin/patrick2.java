@@ -6,11 +6,9 @@
  * an OBJ file and the rest of the elements are completed using string manipulation
  * and sound buffer manipulation. 
  */
-
  package ie.tudublin;
 
  import processing.core.PApplet;
-
 
 public class patrick2 extends poly {
 
@@ -23,7 +21,7 @@ public class patrick2 extends poly {
     @Override
     public void render()
     {
-        //v.background(0);
+        v.background(0);
         v.noStroke();
         //v.lights();        
         //function calls 
@@ -32,25 +30,22 @@ public class patrick2 extends poly {
 
     float[] lerpedBuffer;
 
-   
- 
  float y = 400;
  float lerped = 0;
  float lerpedAvg = 0;
  float bufferIndex = 0.0f; // Index for smooth looping within the buffer
+ //long lastBeatTime = 0; // Stores the time of the last beat detection
+ //long lastColorChange = 0; // Stores the time of the last bgcolor update
 
- long lastBeatTime = 0; // Stores the time of the last beat detection
- long lastColorChange = 0; // Stores the time of the last bgcolor update
 
- 
  public void gotToTry() {
     v.beat.detect(v.ap.mix);
     // Check if a second has passed since the last beat
-    if (v.millis() - lastBeatTime >= 10) {
+    if (v.millis() - v.lastBeatTime >= 10) {
         if (v.beat.isOnset()) {
             v.background(0); // Change background on beat (once per second)
         }
-        lastBeatTime = v.millis(); // Update last beat time
+        v.lastBeatTime = v.millis(); // Update last beat time
     }
     //background(0);
     v.lights();
@@ -62,7 +57,6 @@ public class patrick2 extends poly {
     }
 
     float avg = tot / v.ap.mix.size();
-
     lerpedAvg = v.lerp(lerpedAvg, avg, 0.1f);
    
     v.pushMatrix();
@@ -72,24 +66,17 @@ public class patrick2 extends poly {
     v.scale(2.0f);
     v.shape(v.ball);
     v.popMatrix();
-
-   //fill(0, 255, 0); // Set object to green (flat color)
-   //tint(255, 0, 0); // Set object to red
    
    v.fill(v.bgcolor % 255, 255, 255, 100); // Adjust transparency as needed
-   //stroke(bgcolor % 255, 255, 255);
-
+   String myText = "WE'VE GOT TO TRY";
    v.pushMatrix();
 
-
    float textWidth = v.textWidth(v.myText);
-
     float textHeight = v.textAscent();
     float spacingX = textWidth + 5; // Adjust spacing as needed (5 is for gap between characters)
     float spacingY = textHeight + 5; // Adjust spacing as needed (5 is for gap between lines)
     v.translate(v.width/2, v.height/1.5f);
     v.rotateY(v.theta/2); 
-
 
     for (int y = 0; y < v.height; y += spacingY) {
         for (int x = 0; x < v.width; x += spacingX) {
@@ -98,14 +85,9 @@ public class patrick2 extends poly {
 
         }
     }
-
     v.popMatrix();
-
-
     v.theta += 0.01f + tot/1625;
     v.bgcolor += 0.3 + tot/2;
-
-   
  }
 
 }
