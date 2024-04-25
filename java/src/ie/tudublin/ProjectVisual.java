@@ -60,8 +60,7 @@ public class ProjectVisual extends Visual {
 
         if ( key == '3')
         {
-            // play = new jeff(this);
-            // popMatrix();
+            //play = new kalidascope(this);
         }
 
         if (key =='4')
