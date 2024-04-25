@@ -35,13 +35,16 @@ public abstract class Visual extends PApplet
 	private float amplitude  = 0;
 	private float smothedAmplitude = 0;
 
+	// jeff Variables ---------------
+
+
 // Patrick Variables ---------------
 	PShape ball;
     float bgcolor = 0;
     float theta;
     String myText = "WE'VE GOT TO TRY";
     PFont myFont;
-	PVector lightPosition = new PVector(width / 2, height / 2, 200);
+	//PVector lightPosition = new PVector(width / 2, height / 2, 200);
 	long lastBeatTime = 0; // Stores the time of the last beat detection	
 	
 
