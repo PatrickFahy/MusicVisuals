@@ -9,15 +9,14 @@ import processing.core.PApplet;
 public class SamVisuals extends poly {
     Minim minim; // Audio operations
     AudioPlayer ap; // Controls playback of audiofile
-    AudioBuffer ab; // Synchronizes the graphics with the music
-    FFT fft; // Manages the frequency spectrum of music
+    // AudioBuffer ab; Synchronizes the graphics with the music
+    // FFT fft; Manages the frequency spectrum of music
 
-    float[] lerpedBuffer; // Lerping array
+    //float[] lerpedBuffer;
     float smoothedAmplitude = 0; // Variable creating smoother visual transitions
-    VisualShape[] shapes; // Array that controls the shapes behavior
-    int screen_size = 800; // Defines the dimensions of the visulas display window
-    int maxWidth = 700; // Maximum width for shape positions
-    int maxHeight = 700; // Maximum height for shape positions
+    static VisualShape[] shapes1 = new SamVisuals.VisualShape[50]; // Array that controls the shapes behavior
+    int maxWidth = v.width; // Maximum width for shape positions
+    int maxHeight = v.height; // Maximum height for shape positions
     boolean sceneActive = true; // Boolean that controls the visuals activity
 
     public SamVisuals(ProjectVisual v) {
@@ -31,45 +30,45 @@ public class SamVisuals extends poly {
     }
 
     public void settings() { // Sets the size of the window and the rendering mode (3D)
-        v.size(screen_size, screen_size, v.P3D);
+        v.size(v.height, v.width, v.P3D);
     }
 
     public void setup() {
-        minim = new Minim(this); // Initializes a new Minim audio library with the current code as context
-        ap = minim.loadFile("The Chemical Brothers - We've Got To Try.mp3", 1024); // Function to add the song
-        ap.play(); // Plays the music
-        ab = ap.mix; // Gets the mixed buffer from the audio player
-        fft = new FFT(ap.bufferSize(), ap.sampleRate()); // Analysing the song frequency
+        v.ab = ap.mix; // Gets the mixed buffer from the audio player
+        v.fft = new FFT(ap.bufferSize(), ap.sampleRate()); // Analysing the song frequency
         v.colorMode(v.HSB); // Sets the color mode
 
-        lerpedBuffer = new float[v.width]; // Array (window width size) to store lerped audio
-        shapes = new VisualShape[50]; // Sketch will manage 50 shapes
-        for (int i = 0; i < shapes.length; i++) { // For loop randomizes the shape type and position
-            shapes[i] = new VisualShape(v.random(maxWidth), v.random(maxHeight), (int) v.random(3));
+        v.lerpedBuffer = new float[v.width]; // Array (window width size) to store lerped audio
+        //shapes1 = new VisualShape[50]; // Sketch will manage 50 shapes
+        for (int i = 0; i < shapes1.length; i++) { // For loop randomizes the shape type and position
+            shapes1[i] = new VisualShape(v.random(maxWidth), v.random(maxHeight), (int) v.random(3));
         }
         v.perspective(v.PI/3, (float)v.width/v.height, 0.1f, 5000); // Adjust the field of view
     }
 
     public void Samdraw() {
-        fft.forward(ab);
-        float bass = fft.calcAvg(40, 80); // Averages the amplitude of frequencies between 40 and 80 Hz
-        float treble = fft.calcAvg(5000, 10000); // "" for treble frequencies
+        v.fft.forward(v.ab);
+        float bass = v.fft.calcAvg(40, 80); // Averages the amplitude of frequencies between 40 and 80 Hz
+        float treble = v.fft.calcAvg(5000, 10000); // "" for treble frequencies
         v.background(bass * 300 % 255, 255, treble * 300 % 255); // sets background colours
 
-        float sum = 0;
-        for (int i = 0; i < 799; i++) { // Max audio size is 800
-            sum += v.abs(ab.get(i)); // Sets the value of each audio sample to sum (positive value)
-            lerpedBuffer[i] = v.lerp(lerpedBuffer[i], ab.get(i), 0.1f); // Lerp function calculates between the previous buffer value and the current one
-        }
-        float average = sum / ab.size(); // Average amplitude
-        smoothedAmplitude = v.lerp(smoothedAmplitude, average, 0.2f); // Smooths the average amplitude to control the visual response to changes in sound level
+        // float sum = 0;
+        // for (int i = 0; i < 99; i++) { // Max audio size is 800
+        //     sum += v.abs(v.ab.get(i)); // Sets the value of each audio sample to sum (positive value)
+        //      v.lerpedBuffer[i] = v.lerp(v.lerpedBuffer[i], v.ab.get(i), 0.1f); // Lerp function calculates between the previous buffer value and the current one
+        // }
+        // float average = sum / v.ab.size(); // Average amplitude
+        // smoothedAmplitude = v.lerp(smoothedAmplitude, average, 0.2f); // Smooths the average amplitude to control the visual response to changes in sound level
 
-        for (VisualShape shape : shapes) { // Draws the shapes and updates each shapes state based on the song bass level
-            shape.update(bass);
-            shape.display();
+        for (int i = 0; i < shapes1.length; i++) { // Draws the shapes and updates each shapes state based on the song bass level
+            if(shapes1[i] == null){
+                break;
+            }
+            shapes1[i].update(bass);
+            shapes1[i].display();
         }
 
-        if (sceneActive && v.millis() > 20000) { // Makes each scene no longer than 20 seconds
+        if (sceneActive && v.millis() > 1000) { // Makes each scene no longer than 20 seconds
             sceneActive = false;
             changeScene();
         }
@@ -77,8 +76,8 @@ public class SamVisuals extends poly {
 
     // Method to regenerate the shapes when a particular condition is met
     void changeScene() {
-        for (int i = 0; i < shapes.length; i++) {
-            shapes[i] = new VisualShape(v.random(maxWidth), v.random(maxHeight), (int) v.random(3));
+        for (int i = 0; i < shapes1.length; i++) {
+            shapes1[i] = new VisualShape(v.random(maxWidth), v.random(maxHeight), (int) v.random(3));
         }
     }
 

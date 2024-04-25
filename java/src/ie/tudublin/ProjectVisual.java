@@ -64,7 +64,7 @@ public class ProjectVisual extends Visual {
 
         if (key =='4')
         {
-            //play = new Spiral(this);
+            play = new SamVisuals(this);
         }
 
         if(key == '5'){

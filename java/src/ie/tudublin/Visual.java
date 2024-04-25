@@ -28,7 +28,7 @@ public abstract class Visual extends PApplet
 	private AudioInput ai;
 	AudioPlayer ap;
 	AudioBuffer ab;
-	private FFT fft;
+	FFT fft;
 	BeatDetect beat;
 	BeatListener bl;
 
@@ -59,6 +59,10 @@ public abstract class Visual extends PApplet
 	Assignment_Test.Square theVoid; // Create an instance of Square
 
 //End Ruben Vars
+
+// Sam Variables
+	SamVisuals.VisualShape[] shapes1 = new SamVisuals.VisualShape[50];
+	
 
 	public void startMinim() 
 	{
