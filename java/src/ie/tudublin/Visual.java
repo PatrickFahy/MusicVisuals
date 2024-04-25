@@ -3,13 +3,6 @@ package ie.tudublin;
 import processing.core.*;
 import ddf.minim.*;
 import ddf.minim.analysis.*;
-import ddf.minim.analysis.FFT;
-import ddf.minim.AudioBuffer;
-import ddf.minim.AudioInput;
-import ddf.minim.AudioPlayer;
-import ddf.minim.Minim;
-import processing.core.PApplet;
-import processing.core.PVector;
 
 
 
@@ -44,7 +37,7 @@ public abstract class Visual extends PApplet
     float theta;
     String myText = "WE'VE GOT TO TRY";
     PFont myFont;
-	PVector lightPosition = new PVector(width / 2, height / 2, 200);
+	//PVector lightPosition = new PVector(width / 2, height / 2, 200);
 	long lastBeatTime = 0; // Stores the time of the last beat detection	
 	
 
@@ -62,6 +55,24 @@ public abstract class Visual extends PApplet
 	Assignment_Test.Square theVoid; // Create an instance of Square
 
 //End Ruben Vars
+
+
+// Cormac Variables
+	//Cormac_lightning Variables
+	//Cormac_lightning.rain[] rains = new Cormac_lightning.rain[125]; // Array to hold rains
+	
+
+	// Cormac_cubes Variables
+	int numCubes = 500;
+
+	float[] cubeXPositions = new float[numCubes]; // X positions of cubes
+    float[] cubeYPositions = new float[numCubes]; // Y positions of cubes
+    float[] cubeZPositions = new float[numCubes]; // Z positions of cubes
+    float[] cubeVelocities = new float[numCubes]; // Velocities of cubes
+    int[] cubeColors = new int[numCubes];; // Colors of cubes
+
+//End Cormac Variables
+
 
 	public void startMinim() 
 	{

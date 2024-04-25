@@ -53,11 +53,11 @@ public class patrick2 extends poly {
 
     for(int i = 0 ; i < v.ap.mix.size() *0.8; i ++)
     {
-        tot += v.abs(v.ap.mix.get(i));
+        tot += PApplet.abs(v.ap.mix.get(i));
     }
 
     float avg = tot / v.ap.mix.size();
-    lerpedAvg = v.lerp(lerpedAvg, avg, 0.1f);
+    lerpedAvg = PApplet.lerp(lerpedAvg, avg, 0.1f);
    
     v.pushMatrix();
     v.translate(v.width/2, v.height/1.5f);

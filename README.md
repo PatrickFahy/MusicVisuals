@@ -14,8 +14,6 @@
 
 
 
-
-
 Name: Patrick Fahy
 
 Student Number: C22394713
@@ -94,8 +92,6 @@ public void gotToTry() {
 ```
 
 
-
-
 This is code for the Sphere:
 
 ```Java
@@ -162,12 +158,20 @@ public void BufferSphere()
 
 
 
+These are screenshots of my second Scene:
+
+![An image](images/sphereWave1.png)
+
+![An image](images/sphereWave2.png)
+
+![An image](images/sphereWave3.png)
+
+![An image](images/sphereWave4.png)
+
+![An image](images/sphereWave5.png)
 
 
-
-
-
-These are screenshots of my First Scene:
+These are screenshots of my Second Scene:
 
 ![An image](images/we'veGotToTryDog6.png)
 
@@ -178,9 +182,6 @@ These are screenshots of my First Scene:
 ![An image](images/we'veGotToTryDog3.png)
 
 ![An image](images/we'veGotToTryDog2.png)
-
-
-
 
 
 This a link to the 'We've Got to Try' Music video on Youtube [hyperlink](https://www.youtube.com/watch?v=mRfSM-lv55I)
