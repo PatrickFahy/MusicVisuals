@@ -8,10 +8,8 @@ import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
 import processing.core.*;
 
-
 public class jeff extends poly {
-
-
+    
    public jeff(ProjectVisual v)
    {
        super(v);
@@ -20,17 +18,14 @@ public class jeff extends poly {
     @Override
     public void render()
     {
-        //v.background(0);
+        v.background(0);
         v.noStroke();
-        //v.lights();        
+        v.lights();        
         //function calls 
         cube();
     }
 
-    Minim m;
-    AudioInput ai;
-    AudioPlayer ap;
-    AudioBuffer b;
+
 
     PVector lightPosition;
     float angle = 0;
@@ -89,31 +84,6 @@ public class jeff extends poly {
         }
     }
 
-    // public void settings()
-    // {
-    //     v.size(800, 800);
-    //     v.println("CWD: " + System.getProperty("user.dir"));
-    //     //fullScreen(P3D, SPAN);
-    // }
-    
-    // public void setup()
-    // {
-    //     // colorMode(HSB);
-    //     v.noCursor();
-    //     m = new Minim(this);
-    //     ap = m.loadFile("The Chemical Brothers - We've Got To Try.mp3");
-    //     ap.play();
-    //     b = ap.mix;
-
-    //     lightPosition = new PVector(v.width / 2,v.height / 2, 200);
-
-    //     // Initialize the particle
-    //     particles = new Particle[numParticles];
-    //     for (int i = 0; i < numParticles; i++) 
-    //     {
-    //         particles[i] = new Particle(v.random(v.width), v.random(v.height), v.random(-1, 1), v.random(-1, 1));
-    //     }
-    // }
     float rot = 0;
 
     //frequency bands
@@ -121,6 +91,8 @@ public class jeff extends poly {
 
     public void cube()
     {
+        lightPosition = new PVector(v.width / 2,v.height / 2, 200);
+
         v.background(0);
         v.stroke(bgcolor % 255, 255, 255);
 
@@ -129,64 +101,45 @@ public class jeff extends poly {
 
         v.stroke(255);
         v.lights();
-        v.stroke(v.map(v.getSmoothedAmplitude(), 0, 1, 0, 255), 255, 255);
-        
-        //Finds amplitude of the song
-        float amplitude = v.getSmoothedAmplitude(); 
 
         float tot = 0;
 
         // Set light position
-        v.pointLight(255, 255, 255, lightPosition.x, lightPosition.y, lightPosition.z);
+        v.pointLight(255, 255, 255, v.lightPosition.x, v.lightPosition.y, v.lightPosition.z);
  
         float w = v.width / 2;
         float h = v.height / 2;
-        float spot = 0;
 
-        //calculates the total and average
-        for(int i = 0 ; i < v.ap.mix.size() ; i ++)
-        {
-            tot += v.abs(v.ap.mix.get(i));
-        }
-        float avg = tot / v.ap.mix.size();
+        tot = v.calculateTotal();
+
+        float avg = v.calculateAverageAmplitude();
 
         // Smooth the amplitude value
-        smoothedAmplitude = v.lerp(smoothedAmplitude, avg, 0.1f);
+        smoothedAmplitude = PApplet.lerp(smoothedAmplitude, avg, 0.1f);
 
-        // Update and display particles
-        for (int j = 0; j < numParticles; j++) 
-        {
-            particles[j].update(tot);
-            particles[j].display();
-        }
-        
-        float cubeSize = v.map(smoothedAmplitude, 0, 1, 50, 400); // Adjusted base size
+        //Changes the size of the cube
+        float cubeSize = PApplet.map(smoothedAmplitude, 0, 1, 50, 400);
 
         //keeps it centered
         v.translate(w, h);
 
         //camera postioning
-        for(int i = 0 ; i < v.ap.mix.size() ; i ++)
+        for(int i = 0; i < v.ap.mix.size() ; i ++)
         {
+
             //calculates the hue based on the song
-            float hue = v.map(i, 0, v.ap.mix.size(),0,256);
+            float hue = PApplet.map(i, 0, v.ap.mix.size(),0,256);
 
-
-            //rotates camera when buffer is twice the average
+            //rotates camera and draws cube when buffer is twice the average
             if(v.ap.mix.get(i) > (avg))
             {
                 v.rotateY(v.frameCount * 0.0004f);
                 v.rotateX(v.frameCount * 0.002f);
-
-                // Adjust the translation based on amplitude
-                float translation = v.map(amplitude, 0, 1, 0, 50); // Adjust the multiplier as needed
-                spot += translation;
                 v.stroke(bgcolor % 255, 255, 255);
                 v.fill(200, 200, 200);
                 v.box(cubeSize);
             }
-
-            v.translate(spot, spot);
+            v.translate(0, 0);
             // Draw the ellipse
             float ellipseX = w * 2;
             float ellipseY = h * 2;
