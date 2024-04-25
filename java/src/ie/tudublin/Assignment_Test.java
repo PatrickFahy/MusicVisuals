@@ -68,7 +68,7 @@ public class Assignment_Test extends poly {
 
         lerpedAvg = v.lerp(lerpedAvg, (float)v.calculateAverageAmplitude(), 0.3f);
 
-        if (v.millis() > 7000 && !theVoid.expanding) {
+        if (v.millis() > 20000 && !theVoid.expanding) {
             theVoid.expanding = true; // Start expanding the square
             theVoid.startTime = v.millis(); // Record the start time
         }
@@ -143,7 +143,9 @@ public class Assignment_Test extends poly {
         for(int i = 0; i < v.ab.size(); i++){
             float hue = v.map(i, 0, v.ab.size(), 0, 256);
             v.stroke(hue, 255, 255);
-            v.line(i, pos, i, pos + v.ab.get(i) * pos * lerpedAvg);
+            v.line(i*3, pos, i*3, pos + v.ab.get(i) * pos * lerpedAvg);
+            //v.line(i+v.ab.size(), pos, i+v.ab.size(), pos + v.ab.get(i) * pos * lerpedAvg);
+            //v.line(i+v.ab.size()*2, pos, i+v.ab.size()*2, pos + v.ab.get(i) * pos * lerpedAvg);
         }
     }
 

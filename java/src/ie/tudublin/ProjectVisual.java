@@ -1,6 +1,7 @@
 package ie.tudublin;
 
 import ddf.minim.analysis.BeatDetect;
+import processing.core.PVector;
 
 
 public class ProjectVisual extends Visual {
@@ -9,7 +10,7 @@ public class ProjectVisual extends Visual {
     poly play;
 
     public void settings(){
-        fullScreen(P3D);
+        fullScreen(P3D,SPAN);
 	}
 
 	public void setup()
@@ -28,6 +29,8 @@ public class ProjectVisual extends Visual {
         play = new patrick2(this);
 		startListening();
         colorMode(HSB);
+        //lightPosition = new PVector(width / 2, height / 2, 200);
+         
 	}
     
 
@@ -69,7 +72,7 @@ public class ProjectVisual extends Visual {
         }
 
         if(key == '5'){
-            //play = new Cubesquared2(this);
+            play = new jeff(this);
         }
 
         if(key == '6'){

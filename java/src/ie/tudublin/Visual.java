@@ -106,7 +106,7 @@ public abstract class Visual extends PApplet
 		}
 	}
 
-	
+	//calculates the average
 	public float calculateAverageAmplitude()
 	{
 		float total = 0;
@@ -116,6 +116,17 @@ public abstract class Visual extends PApplet
 		}
 		amplitude = total / ab.size();
 		return amplitude;
+	}
+	
+	//calculates the total
+	public float calculateTotal()
+	{
+		float total = 0;
+		for(int i = 0 ; i < ab.size() ; i ++)
+        {
+			total += abs(ab.get(i));
+		}
+		return total;
 	}
 
 
@@ -147,7 +158,7 @@ public abstract class Visual extends PApplet
 	}
 
 	public void settings(){
-		size(1024, 1000, P3D);
+		size(800, 800,P3D);
 	}
 
 	public int getFrameSize() {
