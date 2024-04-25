@@ -42,6 +42,7 @@ public class patrick1 extends Visual {
 
     String myText = "WE'VE GOT TO TRY";
     PFont myFont;
+    float PI;
 
 
 
