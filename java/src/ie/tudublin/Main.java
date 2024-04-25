@@ -1,7 +1,5 @@
 package ie.tudublin;
 
-import example.patrick;
-
 public class Main {
 
     public void startUI() {
