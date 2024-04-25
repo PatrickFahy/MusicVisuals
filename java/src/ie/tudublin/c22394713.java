@@ -7,13 +7,11 @@
  * sphere.
  * 
  */
-
-
 package ie.tudublin;
 
 import processing.core.PApplet;
 import processing.core.PVector;
-
+  
 public class c22394713 extends poly {
 
 
@@ -30,11 +28,7 @@ public class c22394713 extends poly {
         //function calls 
         BufferSphere();
     }
-
     
-    
-
-
     public void BufferSphere()
     {    
         float y = 400;
@@ -88,19 +82,10 @@ public class c22394713 extends poly {
             float hue = PApplet.map(i, 0, v.ap.mix.size() , 0, 256);
             v.stroke(v.bgcolor % 255, 255, 255);
             v.noFill();
-            //line(i, h , i , h + b.get(i) * h);                  //waveform
-            //line(width - i, h , width - i , h + b.get(i) * h); // Draw mirrored line on the opposite side
             v.line(i, h, i, h + value * h); // Top waveform line
             v.line(v.width - i, h, v.width - i, h + value * h); // Mirrored waveform line on the opposite side
-
-            //line(i, -h , i , -h + b.get(i) * -h); // Draw line on the opposite pole
-            //line(width - i, -h , width - i , -h + b.get(i) * -h); 
-            v.line(i, -h, i, -h + value * -h);
-            v.line(v.width - i, -h, v.width - i, -h + value * -h);
-
-
+            v.line(i, -h, i, -h + value * -h);// Draw line on the opposite pole
+            v.line(v.width - i, -h, v.width - i, -h + value * -h); // Mirrored waveform line on the opposite side
         }
-
     }
-
     }
