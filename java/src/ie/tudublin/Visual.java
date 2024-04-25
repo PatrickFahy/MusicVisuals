@@ -42,6 +42,7 @@ public abstract class Visual extends PApplet
     String myText = "WE'VE GOT TO TRY";
     PFont myFont;
 	PVector lightPosition = new PVector(width / 2, height / 2, 200);
+	long lastBeatTime = 0; // Stores the time of the last beat detection	
 	
 
 	public BeatDetect getBeat() {
