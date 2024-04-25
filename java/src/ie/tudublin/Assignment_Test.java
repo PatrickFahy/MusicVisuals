@@ -18,7 +18,7 @@ public class Assignment_Test extends poly {
     float smoothedY = 0;
     float smoothedAmplitude = 0;
 
-    Circle[] shapes = new Circle[18];
+    static Circle[] shapes = new Circle[18];
     Square theVoid = new Square();
 
 
@@ -26,8 +26,8 @@ public class Assignment_Test extends poly {
     int screen_size = 600;
     int lastSpawnTime = 0; // Track the time since last circle spawn
 
-    boolean scene1 = true; // Control variable for the initial scene
-    boolean scene2 = false; // Control variable for the initial scene
+    static boolean scene1 = true; // Control variable for the initial scene
+    static boolean scene2 = false; // Control variable for the initial scene
 
     public Assignment_Test(ProjectVisual v){
         super(v);
@@ -41,7 +41,7 @@ public class Assignment_Test extends poly {
 
 
     public void settings() {
-        v.size(screen_size, screen_size);
+        v.size(v.width, v.height);
         //fullScreen(P3D, SPAN);
     }
 
@@ -71,11 +71,11 @@ public class Assignment_Test extends poly {
 
 
         // Calculate tempo based on amplitude
-        float tempo = v.map(smoothedAmplitude, 0, 1, 0.1f, 5); // Map amplitude to tempo range
+        float tempo = v.map(v.getSmoothedAmplitude(), 0, 1, 0.1f, 5); // Map amplitude to tempo range
 
         lerpedAvg = v.lerp(lerpedAvg, (float)v.calculateAverageAmplitude(), 0.3f);
 
-        if (v.millis() > 18000 && !theVoid.expanding) {
+        if (v.millis() > 7000 && !theVoid.expanding) {
             theVoid.expanding = true; // Start expanding the square
             theVoid.startTime = v.millis(); // Record the start time
         }
@@ -130,7 +130,7 @@ public class Assignment_Test extends poly {
             v.noFill();
 
             // Draw circles using lerpedAvg for size
-            v.circle(v.width / 2, v.height / 2, v.ab.get(i) * lerpedAvg * screen_size / 2 * 6);
+            v.circle(v.width / 2, v.height / 2, v.ab.get(i) * lerpedAvg * v.height / 2 * 6);
         }
     }
 
@@ -142,7 +142,7 @@ public class Assignment_Test extends poly {
             v.noFill();
 
             // Draw circles using lerpedAvg for size
-            v.circle(centerX, centerY, v.ab.get(i) * lerpedAvg * screen_size / 2 * 6);
+            v.circle(centerX, centerY, v.ab.get(i) * lerpedAvg * v.height / 2 * 6);
         }
     }
 
@@ -193,8 +193,8 @@ public class Assignment_Test extends poly {
         }
 
         void move(float tempo) {
-            centerx += speedX * (tempo);
-            centery += speedY * (tempo);
+            centerx += speedX * tempo;
+            centery += speedY * tempo;
         }
 
         void draw() {
@@ -220,7 +220,7 @@ public class Assignment_Test extends poly {
         float startY;
         float endX;
         float endY;
-        float duration = 2000; // 10 seconds duration for expansion
+        float duration = 2000; // 2 seconds duration for expansion
         float startTime;
         boolean expanding = false;
 
@@ -234,29 +234,30 @@ public class Assignment_Test extends poly {
 
         void expand() {
             float elapsedTime = v.millis() - startTime;
-
-            float expansionFactor = v.map(elapsedTime, 0, duration, 0, 1);
-
-            // Calculate the change in width and height from the center
-            float changeX = (v.width / 2) * expansionFactor;
-            float changeY = (v.height / 2) * expansionFactor;
-
-            // Calculate the center position of the square
-            float centerX = v.width / 2;
-            float centerY = v.height / 2;
-
-            // Adjust the start and end points equally from the center
-            startX = centerX - changeX;
-            startY = centerY - changeY;
-            endX = centerX + changeX;
-            endY = centerY + changeY;
-
-            // Set the fill color to black
-            v.fill(0);
-
-            // Draw the square with the calculated center
-            v.rect(startX, startY, endX - startX, endY - startY);
+            float progress = elapsedTime / duration; // Calculate the progress of expansion
+    
+            // Interpolate current position based on progress
+            float currentX = v.lerp(startX, endX, progress);
+            float currentY = v.lerp(startY, endY, progress);
+    
+            // Calculate current size based on progress
+            float currentSize = v.lerp(0, v.max(v.width, v.height), progress);
+    
+            // Draw the expanding square
+            v.fill(0); // Set fill color to black
+            v.rectMode(v.CENTER);
+            v.rect(currentX, currentY, currentSize, currentSize);
+    
+            // Check if expansion is complete
+            if (elapsedTime >= duration) {
+                expanding = false; // Set expanding flag to false
+                // Optionally, perform any actions needed after expansion completes
+            }
         }
+        
+        
+        
+        
     }
 
     // Method to remove a circle from the array

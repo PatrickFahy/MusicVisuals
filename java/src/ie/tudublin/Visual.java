@@ -42,14 +42,6 @@ public abstract class Visual extends PApplet
     String myText = "WE'VE GOT TO TRY";
     PFont myFont;
 	PVector lightPosition = new PVector(width / 2, height / 2, 200);
-	////////	
-	Assignment_Test.Circle[] shapes = new Assignment_Test.Circle[18];
-	Assignment_Test.Square theVoid; // Create an instance of Square
-
-	
-	
-
-
 	
 
 	public BeatDetect getBeat() {
@@ -60,6 +52,12 @@ public abstract class Visual extends PApplet
 		this.beat = beat;
 	}
 // End Patrick Variables ---------------
+
+// Ruben Vars:
+	Assignment_Test.Circle[] shapes = new Assignment_Test.Circle[18];
+	Assignment_Test.Square theVoid; // Create an instance of Square
+
+//End Ruben Vars
 
 	public void startMinim() 
 	{
@@ -175,6 +173,7 @@ public abstract class Visual extends PApplet
 	}
 
 	public float getSmoothedAmplitude() {
+		smothedAmplitude = lerp(smothedAmplitude, calculateAverageAmplitude(), 0.1f);
 		return smothedAmplitude;
 	}
 
