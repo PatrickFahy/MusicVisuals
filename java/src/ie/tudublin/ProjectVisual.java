@@ -9,7 +9,7 @@ public class ProjectVisual extends Visual {
     poly play;
 
     public void settings(){
-        fullScreen(P3D,SPAN);
+        fullScreen(P3D);
 	}
 
 	public void setup(){
@@ -55,7 +55,7 @@ public class ProjectVisual extends Visual {
 
         if ( key == '3')
         {
-            //play = new kalidascope(this);
+            play = new Assignment_Test(this);
         }
 
         if (key =='4')
