@@ -105,7 +105,7 @@ public class jeff extends poly {
         float tot = 0;
 
         // Set light position
-        v.pointLight(255, 255, 255, v.lightPosition.x, v.lightPosition.y, v.lightPosition.z);
+        v.pointLight(255, 255, 255, lightPosition.x, lightPosition.y, lightPosition.z);
  
         float w = v.width / 2;
         float h = v.height / 2;

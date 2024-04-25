@@ -29,7 +29,7 @@ public class ProjectVisual extends Visual {
         play = new patrick2(this);
 		startListening();
         colorMode(HSB);
-        lightPosition = new PVector(width / 2, height / 2, 200);
+        //lightPosition = new PVector(width / 2, height / 2, 200);
          
 	}
     
@@ -63,10 +63,10 @@ public class ProjectVisual extends Visual {
 
         if ( key == '3')
         {
-            // play = new jeff(this);
+            play = new Assignment_Test(this);
         }
 
-        if (key =='4')
+        if (key =='4') 
         {
             //play = new Spiral(this);
         }
@@ -76,7 +76,7 @@ public class ProjectVisual extends Visual {
         }
 
         if(key == '6'){
-            //play = new SinWaves(this);
+            play = new Cormac_cubes(this);
         }
         /*if(key == '7'){
             play = new WaveyVisual(this);
