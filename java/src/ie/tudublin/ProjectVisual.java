@@ -60,10 +60,10 @@ public class ProjectVisual extends Visual {
 
         if ( key == '3')
         {
-            //play = new kalidascope(this);
+            play = new Assignment_Test(this);
         }
 
-        if (key =='4')
+        if (key =='4') 
         {
             //play = new Spiral(this);
         }
