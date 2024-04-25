@@ -40,7 +40,7 @@ public class SamVisuals extends poly {
 
         v.lerpedBuffer = new float[v.width]; // Array (window width size) to store lerped audio
         //shapes1 = new VisualShape[50]; // Sketch will manage 50 shapes
-        for (int i = 0; i < shapes1.length; i++) { // For loop randomizes the shape type and position
+        for (int i = 0; i < shapes1.length; i++) { // For loop randomises the shape type and position
             shapes1[i] = new VisualShape(v.random(maxWidth), v.random(maxHeight), (int) v.random(3));
         }
         v.perspective(v.PI/3, (float)v.width/v.height, 0.1f, 5000); // Adjust the field of view
