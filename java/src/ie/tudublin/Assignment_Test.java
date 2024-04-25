@@ -1,11 +1,7 @@
 package ie.tudublin;
-
-import ddf.minim.AudioBuffer;
 import ddf.minim.AudioInput;
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
-import processing.core.PApplet;
-import processing.core.PVector;
 
 public class Assignment_Test extends poly {
     Minim minim;
@@ -21,9 +17,6 @@ public class Assignment_Test extends poly {
     static Circle[] shapes = new Circle[18];
     Square theVoid = new Square();
 
-
-
-    int screen_size = 600;
     int lastSpawnTime = 0; // Track the time since last circle spawn
 
     static boolean scene1 = true; // Control variable for the initial scene

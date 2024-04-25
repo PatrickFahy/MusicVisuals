@@ -10,7 +10,7 @@ import processing.core.PApplet;
 import processing.core.*;
 
 
-public class jeff extends Visual {
+public class jeff_working extends Visual {
 
     Minim m;
     AudioInput ai;
@@ -139,6 +139,7 @@ public class jeff extends Visual {
         float h = height / 2;
         float spot = 0;
 
+        
         //calculates the total and average
         for(int i = 0 ; i < b.size() ; i ++)
         {

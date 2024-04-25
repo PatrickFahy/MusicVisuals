@@ -28,7 +28,7 @@ public class c22394713 extends poly {
         //function calls 
         BufferSphere();
     }
-    
+
     public void BufferSphere()
     {    
         float y = 400;
@@ -46,8 +46,8 @@ public class c22394713 extends poly {
         // Move light position around the object
         float radius = 200;
     
-        v.lightPosition.x = v.width / 2 + PApplet.cos(angle) * radius;
-        v.lightPosition.y = v.height / 2 + PApplet.sin(angle) * radius;
+        lightPosition.x = v.width / 2 + PApplet.cos(angle) * radius;
+        lightPosition.y = v.height / 2 + PApplet.sin(angle) * radius;
 
         // Update angle for next frame
         angle += 0.01;
@@ -70,7 +70,7 @@ public class c22394713 extends poly {
         v.sphere(tot);
         
         // Set light position
-        v.pointLight(255, 255, 255, v.lightPosition.x, v.lightPosition.y, v.lightPosition.z);
+        v.pointLight(255, 255, 255, lightPosition.x, lightPosition.y, lightPosition.z);
 
         float h = v.height / 2;
         //float w = width / (float) b.size(); // Width of each segment

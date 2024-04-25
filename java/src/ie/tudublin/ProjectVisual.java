@@ -12,8 +12,9 @@ public class ProjectVisual extends Visual {
         fullScreen(P3D);
 	}
 
-	public void setup(){
-        colorMode(HSB,360,100,100);
+	public void setup()
+    {
+        colorMode(HSB);
 		startMinim();
         rectMode(CENTER); 
 		loadAudio("The Chemical Brothers - We've Got To Try.mp3");
@@ -26,7 +27,7 @@ public class ProjectVisual extends Visual {
         bl = new BeatListener(beat, getAudioPlayer());
         play = new patrick2(this);
 		startListening();
-        colorMode(HSB, 360, 100, 100);
+        colorMode(HSB);
 	}
     
 
@@ -62,7 +63,7 @@ public class ProjectVisual extends Visual {
             play = new Assignment_Test(this);
         }
 
-        if (key =='4')
+        if (key =='4') 
         {
             play = new SamVisuals(this);
         }
@@ -72,7 +73,7 @@ public class ProjectVisual extends Visual {
         }
 
         if(key == '6'){
-            //play = new SinWaves(this);
+            play = new Cormac_cubes(this);
         }
         /*if(key == '7'){
             play = new WaveyVisual(this);
