@@ -72,7 +72,7 @@ public class ProjectVisual extends Visual {
         }
 
         if(key == '6'){
-            //play = new SinWaves(this);
+            play = new Cormac_cubes(this);
         }
         /*if(key == '7'){
             play = new WaveyVisual(this);

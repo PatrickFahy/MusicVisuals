@@ -59,6 +59,14 @@ public abstract class Visual extends PApplet
 
 //End Ruben Vars
 
+
+// Cormac Variables
+
+
+
+//End Cormac Variables
+
+
 	public void startMinim() 
 	{
 		minim = new Minim(this);
