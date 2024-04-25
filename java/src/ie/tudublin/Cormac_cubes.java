@@ -1,11 +1,9 @@
 package ie.tudublin;
 
-import ie.tudublin.Visual;
 import ddf.minim.AudioBuffer;
 import ddf.minim.AudioInput;
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
-import processing.core.PApplet;
 
 public class Cormac_cubes extends poly {
     Minim minim;
@@ -13,14 +11,7 @@ public class Cormac_cubes extends poly {
     AudioInput ai;
     AudioBuffer ab;
     float rotationSpeed = 0.0001f; // Speed of rotation
-    float sizeMultiplier = 150; // Increase the size multiplier for a larger base size
-
-    // int numCubes = 500; // Number of cubes (particles)
-    // float[] cubeXPositions; // X positions of cubes
-    // float[] cubeYPositions; // Y positions of cubes
-    // float[] cubeZPositions; // Z positions of cubes
-    // float[] cubeVelocities; // Velocities of cubes
-    // int[] cubeColors; // Colors of cubes
+    float sizeMultiplier = 175; // Increase the size multiplier for a larger base size
 
     public Cormac_cubes(ProjectVisual v){
         super(v);

@@ -62,9 +62,6 @@ public abstract class Visual extends PApplet
 
 
 // Cormac Variables
-	//Cormac_lightning Variables
-	//Cormac_lightning.rain[] rains = new Cormac_lightning.rain[125]; // Array to hold rains
-	
 
 	// Cormac_cubes Variables
 	int numCubes = 500;

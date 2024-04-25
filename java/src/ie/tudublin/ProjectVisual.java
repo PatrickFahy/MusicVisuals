@@ -78,9 +78,9 @@ public class ProjectVisual extends Visual {
         if(key == '6'){
             play = new Cormac_cubes(this);
         }
-        /*if(key == '7'){
-            play = new WaveyVisual(this);
-        } */
+        if(key == '7'){
+            play = new Cormac_lightning(this);
+        }
 
         if(key =='r' || key =='R'){ //allows for the song to be  started again from the beginning
 
