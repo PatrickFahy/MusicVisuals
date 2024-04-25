@@ -9,11 +9,12 @@ public class ProjectVisual extends Visual {
     poly play;
 
     public void settings(){
-        fullScreen(P3D,SPAN);
+        fullScreen(P3D);
 	}
 
-	public void setup(){
-        colorMode(HSB,360,100,100);
+	public void setup()
+    {
+        colorMode(HSB);
 		startMinim();
         rectMode(CENTER); 
 		loadAudio("The Chemical Brothers - We've Got To Try.mp3");
@@ -26,7 +27,7 @@ public class ProjectVisual extends Visual {
         bl = new BeatListener(beat, getAudioPlayer());
         play = new patrick2(this);
 		startListening();
-        colorMode(HSB, 360, 100, 100);
+        colorMode(HSB);
 	}
     
 
@@ -45,17 +46,22 @@ public class ProjectVisual extends Visual {
         
         if (key == '1')
         {
+            pushMatrix();
             play = new patrick2(this);
+            popMatrix();
         }
         
         if (key == '2')
         {
+            pushMatrix();
             play = new c22394713(this);
+            popMatrix();
         }
 
         if ( key == '3')
         {
-            //play = new kalidascope(this);
+            // play = new jeff(this);
+            // popMatrix();
         }
 
         if (key =='4')
