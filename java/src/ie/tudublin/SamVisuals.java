@@ -68,7 +68,7 @@ public class SamVisuals extends poly {
             shapes1[i].display();
         }
 
-        if (sceneActive && v.millis() > 1000) { // Makes each scene no longer than 20 seconds
+        if (sceneActive && v.millis() > 1000) { // Makes each scene no longer than 1 seconds
             sceneActive = false;
             changeScene();
         }
