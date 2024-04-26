@@ -1,33 +1,16 @@
 package ie.tudublin;
-
-import ddf.minim.AudioBuffer;
-import ddf.minim.AudioInput;
 import ddf.minim.AudioPlayer;
-import ddf.minim.Minim;
-import processing.core.PApplet;
-import processing.core.PVector;
 
 public class Assignment_Test extends poly {
-    Minim minim;
     AudioPlayer ap;
-    AudioInput ai;
-
-    int mode = 0;
-
-    float y = 0;
-    float smoothedY = 0;
-    float smoothedAmplitude = 0;
 
     static Circle[] shapes = new Circle[18];
     Square theVoid = new Square();
 
-
-
-    int screen_size = 600;
     int lastSpawnTime = 0; // Track the time since last circle spawn
 
     static boolean scene1 = true; // Control variable for the initial scene
-    static boolean scene2 = false; // Control variable for the initial scene
+    static boolean scene2 = false; // Control variable for the second scene
 
     public Assignment_Test(ProjectVisual v){
         super(v);
@@ -49,12 +32,8 @@ public class Assignment_Test extends poly {
         v.ab = ap.mix;
         v.colorMode(v.HSB);
 
-        y = v.height / 2;
-        smoothedY = y;
 
-
-        // Initialize the shapes array with a specific size
-        shapes[0] = new Circle();
+        shapes[0] = new Circle(); // stops the first thing from being null
         lastSpawnTime = v.millis(); // Initialize the last spawn time
     }
 
@@ -64,7 +43,7 @@ public class Assignment_Test extends poly {
         v.background(0);
 
         // Check if it's time to spawn a new circle
-        if (v.millis() - lastSpawnTime >= 500) { // Spawn every 4 seconds
+        if (v.millis() - lastSpawnTime >= 500) { // Spawn every 0.5 seconds
             addCircle();
             lastSpawnTime = v.millis(); // Update last spawn time
         }
@@ -75,16 +54,16 @@ public class Assignment_Test extends poly {
 
         lerpedAvg = v.lerp(lerpedAvg, (float)v.calculateAverageAmplitude(), 0.3f);
 
-        if (v.millis() > 7000 && !theVoid.expanding) {
+        if (v.keyPressed && v.key == 'n' && scene1) {
             theVoid.expanding = true; // Start expanding the square
             theVoid.startTime = v.millis(); // Record the start time
         }
 
         if (theVoid.expanding) {
 
-            if (v.millis() - theVoid.startTime >= theVoid.duration) {
-                scene1 = false; // Set flag to switch to the new scene
-                scene2 = true;
+            if (v.millis() - theVoid.startTime >= theVoid.duration) {  // the void has covered the screen
+                scene1 = false; 
+                scene2 = true;  // Switch the screen
             }
         }
 
@@ -105,7 +84,7 @@ public class Assignment_Test extends poly {
         // Move and draw circles
         for (int i = 0; i < shapes.length; i++) {
             if (shapes[i] == null) {
-                break;
+                break;  // in case of null initialisation
             }
             shapes[i].move(tempo);
             shapes[i].draw();
@@ -142,7 +121,7 @@ public class Assignment_Test extends poly {
             v.noFill();
 
             // Draw circles using lerpedAvg for size
-            v.circle(centerX, centerY, v.ab.get(i) * lerpedAvg * v.height / 2 * 6);
+            v.circle(centerX, centerY, v.ab.get(i) * lerpedAvg * v.height / 2 * 3);
         }
     }
 
@@ -150,7 +129,9 @@ public class Assignment_Test extends poly {
         for(int i = 0; i < v.ab.size(); i++){
             float hue = v.map(i, 0, v.ab.size(), 0, 256);
             v.stroke(hue, 255, 255);
-            v.line(i, pos, i, pos + v.ab.get(i) * pos * lerpedAvg);
+            v.line(i*3, pos, i*3, pos + v.ab.get(i) * pos * lerpedAvg * 0.5f);
+            //v.line(i+v.ab.size(), pos, i+v.ab.size(), pos + v.ab.get(i) * pos * lerpedAvg);
+            //v.line(i+v.ab.size()*2, pos, i+v.ab.size()*2, pos + v.ab.get(i) * pos * lerpedAvg);
         }
     }
 
@@ -209,7 +190,7 @@ public class Assignment_Test extends poly {
             v.ellipse(centerx, centery, mappedRadius * 2, mappedRadius * 2);
 
             // Remove the circle if it reaches the center
-            if (distanceFromCenter <= 5) {
+            if (distanceFromCenter <= 10) {
                 removeCircle(this);
             }
         }
@@ -251,7 +232,6 @@ public class Assignment_Test extends poly {
             // Check if expansion is complete
             if (elapsedTime >= duration) {
                 expanding = false; // Set expanding flag to false
-                // Optionally, perform any actions needed after expansion completes
             }
         }
         

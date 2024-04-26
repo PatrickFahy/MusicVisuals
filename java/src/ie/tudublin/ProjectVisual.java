@@ -1,6 +1,7 @@
 package ie.tudublin;
 
 import ddf.minim.analysis.BeatDetect;
+import processing.core.PVector;
 
 
 public class ProjectVisual extends Visual {
@@ -9,7 +10,7 @@ public class ProjectVisual extends Visual {
     poly play;
 
     public void settings(){
-        fullScreen(P3D);
+        fullScreen(P3D,SPAN);
 	}
 
 	public void setup()
@@ -28,6 +29,8 @@ public class ProjectVisual extends Visual {
         play = new patrick2(this);
 		startListening();
         colorMode(HSB);
+        //lightPosition = new PVector(width / 2, height / 2, 200);
+         
 	}
     
 
@@ -65,19 +68,19 @@ public class ProjectVisual extends Visual {
 
         if (key =='4') 
         {
-            //play = new Spiral(this);
+            play = new SamVisuals(this);
         }
 
         if(key == '5'){
-            //play = new Cubesquared2(this);
+            play = new jeff(this);
         }
 
         if(key == '6'){
-            //play = new SinWaves(this);
+            play = new Cormac_cubes(this);
         }
-        /*if(key == '7'){
-            play = new WaveyVisual(this);
-        } */
+        if(key == '7'){
+            play = new Cormac_lightning(this);
+        }
 
         if(key =='r' || key =='R'){ //allows for the song to be  started again from the beginning
 

@@ -3,13 +3,6 @@ package ie.tudublin;
 import processing.core.*;
 import ddf.minim.*;
 import ddf.minim.analysis.*;
-import ddf.minim.analysis.FFT;
-import ddf.minim.AudioBuffer;
-import ddf.minim.AudioInput;
-import ddf.minim.AudioPlayer;
-import ddf.minim.Minim;
-import processing.core.PApplet;
-import processing.core.PVector;
 
 
 
@@ -28,7 +21,7 @@ public abstract class Visual extends PApplet
 	private AudioInput ai;
 	AudioPlayer ap;
 	AudioBuffer ab;
-	private FFT fft;
+	FFT fft;
 	BeatDetect beat;
 	BeatListener bl;
 
@@ -63,6 +56,25 @@ public abstract class Visual extends PApplet
 
 //End Ruben Vars
 
+// Sam Variables
+	SamVisuals.VisualShape[] shapes1 = new SamVisuals.VisualShape[50];
+	
+
+
+// Cormac Variables
+
+	// Cormac_cubes Variables
+	int numCubes = 500;
+
+	float[] cubeXPositions = new float[numCubes]; // X positions of cubes
+    float[] cubeYPositions = new float[numCubes]; // Y positions of cubes
+    float[] cubeZPositions = new float[numCubes]; // Z positions of cubes
+    float[] cubeVelocities = new float[numCubes]; // Velocities of cubes
+    int[] cubeColors = new int[numCubes];; // Colors of cubes
+
+//End Cormac Variables
+
+
 	public void startMinim() 
 	{
 		minim = new Minim(this);
@@ -91,7 +103,7 @@ public abstract class Visual extends PApplet
 		}
 	}
 
-	
+	//calculates the average
 	public float calculateAverageAmplitude()
 	{
 		float total = 0;
@@ -101,6 +113,17 @@ public abstract class Visual extends PApplet
 		}
 		amplitude = total / ab.size();
 		return amplitude;
+	}
+	
+	//calculates the total
+	public float calculateTotal()
+	{
+		float total = 0;
+		for(int i = 0 ; i < ab.size() ; i ++)
+        {
+			total += abs(ab.get(i));
+		}
+		return total;
 	}
 
 
@@ -132,7 +155,7 @@ public abstract class Visual extends PApplet
 	}
 
 	public void settings(){
-		size(1024, 1000, P3D);
+		size(800, 800,P3D);
 	}
 
 	public int getFrameSize() {
