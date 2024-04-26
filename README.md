@@ -324,21 +324,21 @@ public void settings() { // Sets the size of the window and the rendering mode (
 
 These are screenshots of my visuals:
 
-![An image](images/Sam'sShapes1.png)
+![An image](images/Shapes1.png)
 
-![An image](images/Sam'sShapes2.png)
+![An image](images/Shapes2.png)
 
-![An image](images/Sam'sShapes3.png)
+![An image](images/Shapes3.png)
 
-![An image](images/Sam'sShapes4.png)
+![An image](images/Shapes4.png)
 
-![An image](images/Sam'sShapes5.png)
+![An image](images/Shapes5.png)
 
-![An image](images/Sam'sShapes6.png)
+![An image](images/Shapes6.png)
 
-![An image](images/Sam'sShapes7.png)
+![An image](images/Shapes7.png)
 
-![An image](images/Sam'sShapes8.png)
+![An image](images/Shapes8.png)
 
 
 This a link to the 'We've Got to Try' Music video on Youtube [hyperlink](https://www.youtube.com/watch?v=mRfSM-lv55I)
