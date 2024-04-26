@@ -13,6 +13,10 @@ public class jeff extends poly {
    public jeff(ProjectVisual v)
    {
        super(v);
+       particles = new Particle[numParticles];
+       for (int i = 0; i < numParticles; i++) {
+           particles[i] = new Particle(v.random(v.width), v.random(v.height), v.random(-1, 1), v.random(-1, 1));
+       }
    }
 
     @Override
@@ -111,6 +115,12 @@ public class jeff extends poly {
         float h = v.height / 2;
 
         tot = v.calculateTotal();
+        // Render particles
+        for (int i = 0; i < particles.length; i++) {
+            particles[i].update(tot); // Passing time delta
+            particles[i].display();
+        }
+        
 
         float avg = v.calculateAverageAmplitude();
 
