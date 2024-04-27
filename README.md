@@ -192,6 +192,195 @@ This is the youtube video:
 ![An image](images/MusicVideoScreenshot.png)
 
 
+Ruben Kenny
+c22393366
+
+# How it works
+- My first scene shows circles falling towards a pulsating center of concentric circles. They pulse in time with the music. The circles also speed up in time with the music
+
+- This center works by going through a for loop which increments the i value by 10 each time, increasing the radius of each concentric circle. Each circle has a different colour as they're mapped according to their i value relative to the audoio buffer size for their hue. v.ab.get(i) * lerpedAvg * v.height / 2 * 6 describes the radius of each circle. 
+
+- The falling circles are added to an array so they can be manipulated in a for loop. They spawn from a random side of the screen and change their center value based on their distance from the center by the tempo of the music. Their radius is changed based on the mapped value of how for they are from the center, giving the effect of them shrinking
+
+- The second scene is invoked by pressing the n key and having a square eminate from the center. This covers the screen to provide a transition. A face is then made using the pulsating circles again for eyes and a simple waveform as the mouth 
+
+
+# What I am most proud of in the assignment
+- I'm most proud of getting the falling circles to appear to be shrinking and moving in time with the music. I used mapped values and lerping to make this process smooth and create an optical illusion of 3D in a 2D space, as I had invisioned from the outset
+
+
+This is code for the falling circles:
+
+```Java
+
+for (int i = 0; i < shapes.length; i++) {
+            if (shapes[i] == null) {
+                break;  // in case of null initialisation
+            }
+            shapes[i].move(tempo);
+            shapes[i].draw();
+    }
+
+void addCircle() {
+        for (int i = 0; i < shapes.length; i++) {
+            if (shapes[i] == null) {
+                shapes[i] = new Circle();
+                break;
+            }
+        }
+    }
+
+
+class Circle {
+        float centerx;
+        float centery;
+        float radius = 100f;
+        float speedX;
+        float speedY;
+        float hue; 
+
+        Circle() {
+            int side = (int) v.random(1, 4.9f); // left = 1, up = 2, right = 3, down = 4
+            if (side == 1) {
+                centerx = 0;
+                centery = v.random(0, v.height);
+            } else if (side == 2) {
+                centerx = v.random(0, v.width);
+                centery = 0;
+            } else if (side == 3) {
+                centerx = v.width;
+                centery = v.random(0, v.height);
+            } else {
+                centerx = v.random(0, v.width);
+                centery = v.height;
+            }
+            speedX = (float) (v.width / 2 - centerx) * 0.01f;
+            speedY = (float) (v.height / 2 - centery) * 0.01f;
+            hue = v.random(256); // Assign random hue value
+        }
+
+        void move(float tempo) {
+            centerx += speedX * tempo;
+            centery += speedY * tempo;
+        }
+
+        void draw() {
+            // Calculate distance from center
+            float distanceFromCenter = v.dist(centerx, centery, v.width / 2, v.height / 2);
+
+            // Map the distance to a radius range (reverse the values)
+            float mappedRadius = v.map(distanceFromCenter, 0, v.width / 2, 0, 100);
+
+            // Draw the circle with the mapped radius
+            v.fill(hue, 255, 255);
+            v.ellipse(centerx, centery, mappedRadius * 2, mappedRadius * 2);
+
+            // Remove the circle if it reaches the center
+            if (distanceFromCenter <= 10) {
+                removeCircle(this);
+            }
+        }
+    }
+
+void removeCircle(Circle circle) {
+        for (int i = 0; i < shapes.length; i++) {
+            if (shapes[i] == circle) {
+                // Remove the circle
+                shapes[i] = null;
+
+                // Shift subsequent circles one position back
+                for (int j = i; j < shapes.length - 1; j++) {
+                    shapes[j] = shapes[j + 1];
+                }
+                shapes[shapes.length - 1] = null; // Clear the last element
+
+                break; // Exit the loop once the circle is removed
+            }
+        }
+    }
+
+```
+
+This is code for the falling Pulsating Circles:
+
+```Java
+void drawHole() {
+        for (int i = 0; i < v.ab.size(); i += 10) {
+            // Interpolate the hue value
+            float hue = v.map(i, 0, v.ab.size(), 0, 256);
+            v.stroke(hue, 255, 255);
+            v.noFill();
+
+            // Draw circles using lerpedAvg for size
+            v.circle(v.width / 2, v.height / 2, v.ab.get(i) * lerpedAvg * v.height / 2 * 6);
+        }
+    }
+```
+
+This is the code for the expanding square
+```Java
+if (v.keyPressed && v.key == 'n' && scene1) {
+            theVoid.expanding = true; // Start expanding the square
+            theVoid.startTime = v.millis(); // Record the start time
+        }
+
+        if (theVoid.expanding) {
+
+            if (v.millis() - theVoid.startTime >= theVoid.duration) {  // the void has covered the screen
+                scene1 = false; 
+                scene2 = true;  // Switch the screen
+            }
+        }
+class Square {
+        float startX;
+        float startY;
+        float endX;
+        float endY;
+        float duration = 2000; // 2 seconds duration for expansion
+        float startTime;
+        boolean expanding = false;
+
+        Square() {
+            startX = v.width / 2;
+            startY = v.height / 2;
+            endX = v.width / 2;
+            endY = v.height / 2;
+        }
+        
+
+        void expand() {
+            float elapsedTime = v.millis() - startTime;
+            float progress = elapsedTime / duration; // Calculate the progress of expansion
+    
+            // Interpolate current position based on progress
+            float currentX = v.lerp(startX, endX, progress);
+            float currentY = v.lerp(startY, endY, progress);
+    
+            // Calculate current size based on progress
+            float currentSize = v.lerp(0, v.max(v.width, v.height), progress);
+    
+            // Draw the expanding square
+            v.fill(0); // Set fill color to black
+            v.rectMode(v.CENTER);
+            v.rect(currentX, currentY, currentSize, currentSize);
+    
+            // Check if expansion is complete
+            if (elapsedTime >= duration) {
+                expanding = false; // Set expanding flag to false
+            }
+        }
+        
+        
+        
+        
+    }
+```
+
+Here are some screenshots of the scenes
+
+![An image](images/Concentric.png)
+![An image](images/Void.png)
+![An image](images/Face.png)
 
 
 
