@@ -194,55 +194,66 @@ This is the youtube video:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Music Visualiser Project
 
-Name:
+Name: Jeff keenan 
 
-Student Number: 
+Student Number: C22717891
 
 # How it works
+The camera roatates and cubes are displayed in the centre when the amplitued of the song is greater than the average amplitute.The cubes expand and contract by making the size of the cube depented on the smoothed aplitute of the song.I made lines extending from both sides of the cube to give a spinning effect.
+This is code for the cameras and the cubes:
 
-# What I am most proud of in the assignment
-
-# Headings
-## Headings
-#### Headings
-
-This is code:
-
-```Java
-public void render()
-{
-	ui.noFill();
-	ui.stroke(255);
-	ui.rect(x, y, width, height);
-	ui.textAlign(PApplet.CENTER, PApplet.CENTER);
-	ui.text(text, x + width * 0.5f, y + height * 0.5f);
-}
+```java code for the camera rotation and displaying of the cubes 
+    if(v.ap.mix.get(i) > (avg))
+    {
+        v.rotateY(v.frameCount * 0.0004f);
+        v.rotateX(v.frameCount * 0.002f);
+        v.stroke(bgcolor % 255, 255, 255);
+        v.fill(200, 200, 200);
+        v.box(cubeSize);
+    }
 ```
 
-This is an image using a relative URL:
+```java code for lines drawn from the center cubes
 
-![An image](images/p8.png)
+            // Draw a lines from both sides of the cube
+            v.line(0,0,100,100);
+            v.line(100,100,-100,-100);
+```
 
-This is a [hyperlink](http://bryanduggan.org)
+I wanted to create a spiral like visual around the cube so i created elipses that had expanding widths based on the amplitute of the song and drew lines extending from these based on the amplitute to make it look like when the elipses expanded was the lines were being pushed out the bottom of the elipse.
+This is code:
 
+```java code for the camera rotation and displaying of the cubes 
+            v.translate(0, 0);
+            // Draw the ellipse
+            float ellipseX = w * 2;
+            float ellipseY = h * 2;
+            float ellipseWidth = v.ap.mix.get(i) * h/2;
+            float ellipseHeight = h; 
 
-This is a youtube video:
+            v.fill(50, 200, 200);
+            v.stroke(hue,hue,hue);
+            v.ellipse(ellipseX, ellipseY, ellipseWidth, ellipseHeight);
 
-[![YouTube](http://img.youtube.com/vi/J2kHSSFA4NU/0.jpg)](https://www.youtube.com/watch?v=J2kHSSFA4NU)
+            // Calculate the bottom of the ellipse
+            float bottomY = ellipseY + ellipseHeight / 2;
+
+            // Calculate the new point that the line should extend to 
+            float extendedBottomY = bottomY + (v.ap.mix.get(i) * h);
+
+            // Draw a line from the bottom of the ellipse
+            v.fill(hue, hue, hue);
+            v.line(ellipseX, bottomY, ellipseX, extendedBottomY);
+```
+I created a partice class and made the velocity of the particles be dependent on the amplitude of the music and if the particles left the screen they were placed back in the center and this process repeats.
+
+# What I am most proud of in the assignment
+i am really pleased with how the particles turned out in the assignment.When moving my project to the switch case with everyones together I found it very difficult to figure out what was going wrong and how to get the particles to display. The particles were in my setup class in my jeff.java file which was no longer being used.When I ran the code my laptop was completely freezing to the point i couldnt get out of full screen. I eventually figured out the issue and placing it in the render class fixing the the problem.
+
+The particles velocity is effected based on the music and once the particle postion is less than 0 or greater than the height the partice is moved back to the centre.This gives the effect that the particles are radiating from the cube's giving a really cool pulsing effect.
+
+This is a youtube video of my visuals:
+
+[![YouTube](https://youtu.be/pBFs5jb49o4?si=yH4E6XmwXVxu9iZl)]
